@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex egpaper_final"] 1475674175 "egpaper_final.aux" "egpaper_final.bbl" "egpaper_final" 1475674176
+["bibtex egpaper_final"] 1475770168 "egpaper_final.aux" "egpaper_final.bbl" "egpaper_final" 1475770169
   "./ieee.bst" 1411502228 19623 f9cd22458ca68af2567100f1aed905e8 ""
-  "egbib.bib" 1411502228 907 1d8a715c06a031388df50ca64d08e3a9 ""
-  "egpaper_final.aux" 1475674176 1921 7c50e4b6de55cd9eff6a9310e39620d2 ""
+  "egbib.bib" 1475769688 1253 e5f6b34765810f9c9e5510ddec5721f6 ""
+  "egpaper_final.aux" 1475770169 4506 4246d293dd17b5f26a5a6e8658f5f6cd ""
   "egpaper_final.bcf" 0 -1 0 ""
   (generated)
-  "egpaper_final.blg"
   "egpaper_final.bbl"
-["pdflatex"] 1475674175 "egpaper_final.tex" "egpaper_final.pdf" "egpaper_final" 1475674176
+  "egpaper_final.blg"
+["pdflatex"] 1475770168 "egpaper_final.tex" "egpaper_final.pdf" "egpaper_final" 1475770169
   "/etc/texmf/web2c/texmf.cnf" 1474041351 1101 af7716885e081ab43982cab7b4672c1a ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1272929888 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
@@ -104,11 +104,12 @@
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1474041553 3875182 c06cf58a6544e5d610aacd2e0ba94faf ""
   "cvpr.sty" 1411502944 8185 dd0203b51ca147e7021e3db5ace13f47 ""
   "cvpr_eso.sty" 1411502228 3878 6aa7c08ff2621006e0603349e40a30a8 ""
-  "egpaper_final.aux" 1475674176 1921 7c50e4b6de55cd9eff6a9310e39620d2 ""
-  "egpaper_final.bbl" 1475674175 62 d49dbf9d4b1773efa2d694c4016814c1 "bibtex egpaper_final"
-  "egpaper_final.tex" 1475674172 7014 a35cc357e6d21d60ccaec9aeb7c02ae7 ""
+  "egpaper_final.aux" 1475770169 4506 4246d293dd17b5f26a5a6e8658f5f6cd ""
+  "egpaper_final.bbl" 1475770168 1013 8b93e5bb2b8f0729761b3d0411a24bb4 "bibtex egpaper_final"
+  "egpaper_final.tex" 1475770166 13962 1e7e3ae47913699106f3c96a1e51b30a ""
   "eso-pic.sty" 1411502228 9460 d2935ae95b5cd343fcf5887ff530288d ""
+  "images/visu.png" 1475765800 131191 b5450d61dd4a6e5b18b034b6208116ed ""
   (generated)
-  "egpaper_final.pdf"
   "egpaper_final.log"
   "egpaper_final.aux"
+  "egpaper_final.pdf"

@@ -3,47 +3,46 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: egpaper_final.aux
 The style file: ieee.bst
 Database file #1: egbib.bib
-Warning--I didn't find a database entry for "szegedy2015rethinking"
-Warning--I didn't find a database entry for "Kingma14"
-You've used 0 entries,
+Warning--empty booktitle in simonyan2014very
+You've used 6 entries,
             2120 wiz_defined-function locations,
-            501 strings with 3769 characters,
-and the built_in function-call counts, 19 in all, are:
-= -- 0
-> -- 0
+            524 strings with 4510 characters,
+and the built_in function-call counts, 1737 in all, are:
+= -- 149
+> -- 108
 < -- 0
-+ -- 0
-- -- 0
-* -- 3
-:= -- 7
-add.period$ -- 0
-call.type$ -- 0
-change.case$ -- 0
++ -- 42
+- -- 36
+* -- 106
+:= -- 314
+add.period$ -- 18
+call.type$ -- 6
+change.case$ -- 36
 chr.to.int$ -- 0
-cite$ -- 0
-duplicate$ -- 0
-empty$ -- 1
-format.name$ -- 0
-if$ -- 1
+cite$ -- 7
+duplicate$ -- 71
+empty$ -- 134
+format.name$ -- 36
+if$ -- 349
 int.to.chr$ -- 0
-int.to.str$ -- 0
-missing$ -- 0
-newline$ -- 3
-num.names$ -- 0
-pop$ -- 0
+int.to.str$ -- 6
+missing$ -- 6
+newline$ -- 33
+num.names$ -- 12
+pop$ -- 49
 preamble$ -- 1
-purify$ -- 0
+purify$ -- 30
 quote$ -- 0
-skip$ -- 1
+skip$ -- 45
 stack$ -- 0
-substring$ -- 0
-swap$ -- 0
+substring$ -- 30
+swap$ -- 8
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 0
-warning$ -- 0
-while$ -- 0
-width$ -- 0
-write$ -- 2
-(There were 2 warnings)
+type$ -- 24
+warning$ -- 1
+while$ -- 12
+width$ -- 7
+write$ -- 61
+(There was 1 warning)
