@@ -88,46 +88,36 @@ Thirdly, we train our frame classifier and validate it on our validation set. In
 
 \subsection{Pretrain CNN as Features Extractor with SVM}
 
-This approach consists of using a pretrain CNN to vectorize the training and validation sets and to train a linear model such as a Support Vector Machine on the features vectors.
-Usually the features are extracted at the end of the CNN after a fully connected layer,
+This approach consists of using a pretrain CNN to vectorize the training and validation sets and to train a multi-class classifier on the features vectors, such as a linear model with a cross entropy criterion or Support Vector Machines with a one versus all strategy.
+Usually the features are extracted at the end of the CNN after a fully connected layer or an activation functions. This is the usual baseline method for transfer learning %CITE VGG.
 
- This is the usual basline method for transfer learning %CITE VGG
+In this challenge, we use features extracted from the penultimate layer of InceptionV3 \cite{szegedy2015rethinking} (2048 dimensions) and train a linear model with a cross entropy criterion. Our preprocessing is as follow. As InceptionV3 takes as input images of size 299x299. We randomly rescale the original images between 299 and 330 pixels of width or height based on the smallest fitting dimension. Then, we randomly crop a square region of size 299x299. Finally, we normalize each pixels using the mean and standard deviation processed on ImageNet.
 
-Inception-V3 as features extractor with SVM.
+%https://github.com/Cadene/torchnet-m2caiworkflow/blob/master/src/inceptionv3.lua
 
 \subsection{Fine Tuning Pretrain CNN}
 
-Fine tuned Inception-V3}
+Fine tuning consists of training a pretrain CNN on a smaller dataset. Typically, the last fully connected layers, which can be viewed as classification layers, are reset and a smaller learning rate is applied to the pretrain layers. By doing so, the goal is to adapt the representations learned to the new dataset. The more different is the latter from the original dataset, the more layers must be reset.
 
-Fine tuned Residual Network-200
+In this study, we remove the last layer of a pretrain InceptionV3 on ImageNet and add a new fully connected of output size equal to 4. We use Adam \cite{Kingma14} which does not need any smaller learning rate for pretrain layers. We tune using grid search the learning rate et the learning rate decay (which decrease the adaptive learning rate of each parameters by a factor after each mini batch).
+
+We also fine tune an other pretrain CNN on ImageNet called Residual Network-200. As it takes as input images of size 221x221, we use the same preprocessing with a minimal size and a crop size of 221 and a maximum size of 240.
+
 
 \subsection{Other Baselines}
 
-Training Large CNN From Scratch}
+The first baseline is to train an InceptionV3 From Scratch. It means that we reset all its parameters with LSUV method %CITE.
 
-Fine Tuning Inception-V3 with WELDON aggregation
-
-
-
-.an Inception-V3 \cite{szegedy2015rethinking} model and validating the
-different hyperparamaters for the optimization. We
-keep the weights at the epoch that gave the best results on the validation set.
-
-Note that the network is initialized with the weights learnt for the ILSVRC challenge
-(classification of 1.2 million images across 1000 categories). It is fine tuned
-for this task with Adam \cite{Kingma14} optimization algorithm.
+The second baseline is to Fine Tune an Inception-V3 with the WELDON aggregation layer plugged at the end. %Define weldon
+We use the same preprocessing with a minimal size and crop size of 448 and a maximum size of 463.
 
 
-
-\section{Temporal smoothing: averaging}
+\section{Temporal smoothing: Averaging and HMM}
 
 \subsection{Averaging}
 
-From the previous step of our method, we obtain for each image in the test set
-a vector of log-probabilities, with for each possible step the number of networks predicting
-that the frame belong to this step of the operation.
-
-To temporally smooth the predictions, we average the vectors of log-probabilities across the
+Using a model defined in the previous section, we obtain for each images a vector of log-probabilities.
+To temporally smooth the predictions, we average the vectors across the
 last 15 frames (corresponding to 15 seconds of the video). This means that our
 smoothed prediction has a lag of 7.5 seconds. However, the metric of the challenge
 allows a 10-second-margin in the predictions, meaning that it is not considered
@@ -137,46 +127,77 @@ of this tolerance to improve the smoothness of the predictions.
 \subsection{Hidden Markov Model}
 
 In addition to the averaging, we propose to use an HMM to model the transition
-between the various steps of the operation.
-
-To do so, we consider that the step of the operation is the discrete hidden state $x_t$,
+between the various steps of the operation. To do so, we consider that the step of the operation is the discrete hidden state $x_t$,
 from which we only observe a noisy vector $y_t$ that is our averaged vector of log-probabilities from
 the network.
 
-\paragraph{Training} An HMM has 3 parameters: the initial state probabilities, the matrix of probabilities
-of transition between states from one timestep to the next, and the parameters
-regarding the emission of the observations for each possible step.
+\paragraph{Training} A HMM has 3 kind of parameters: the initial state probabilities, the matrix of probabilities
+of transition between states from one time-step to the next, and the parameters
+regarding emission of observations for each possible step.
 
-Those information are directly accessible in the trainset and computed on it.
-Probabilities are computed by simple counting. We chose to model the emission of
-observation with a gaussian distribution so for each step we compute the average
-observation and its covariance matrix.
+We compute those information on the training set. The initial state probabilities and the matrix of transition are computed by simple counting. We chose to model the emission of
+observation with a gaussian distribution. To do so, we computer for each step the average observation and its covariance matrix.
 
-\paragraph{Offline prediction} An HMM is especially useful in offline mode, especially
-in our case where the transition matrix is sparse imposing a lot of structure on
-the predicted sequence of states. By applying Viterbi algorithm, we can ``decode''
-a sequence of observations (votes from the networks) to obtain the most likely
-sequence of states. This is done for our offline prediction.
+\paragraph{Offline prediction} In this study, the transition matrix of our trained HMM is parse, which impose a lot of structure on the predicted sequence of states. By applying Viterbi algorithm, we ``decode'' a sequence of observations to obtain the most likely sequence of states. This is done for our offline prediction.
 
 \paragraph{Online prediction} However, for this challenge, the predictions must
 be given in online mode. Therefore, for our online predictions, to predict the state
 $x_t$ we apply the Viterbi algorithm on the sequence $y_1,...,y_t$ and keep the
-last state of the predicted sequence. This process ensure we are working in only
-mode but decrease the performance of the HMM, because the constrains on the transition
-matrix are no longer really enforced on the predicted sequence.
+last state of the predicted sequence. This process ensure that we are working in online
+mode. However, it decreases the performance of the HMM, because the constrains on the transition
+matrix are no longer enforced on the predicted sequence.
 
-\section{Post-processing to produce requested files}
+\subsection{Post-processing to produce requested files}
 
-Our previous step gives us prediction at a rate of 1 frame per second. To come
+As for now, our two-step model gives us predictions at a rate of 1 frame per second. To come
 back to the required rate of 25 fps, we simply copy each prediction 25 times, and
 then crop or pad the predicted sequence to match exactly the number of frames in
 the video.
 
+\section{Experiments}
+
+
+\begin{table}
+	\begin{center}
+		\begin{tabular}{|l|c|}
+			\hline
+			Classification Model & Validation Accuracy Top 1 (\%) \\
+			\hline\hline
+			InceptionV3 Extraction &  \\
+			InceptionV3 Fine Tuned &  \\
+			ResNet200 Fine Tuned & \\
+			InceptionV3 From Scratch & \\
+			IncpetionV3 Weldon & \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption{}
+\end{table}
+
+
+\begin{table}
+	\begin{center}
+		\begin{tabular}{|l|c|}
+			\hline
+			Temporal Model & Score (\%) \\
+			\hline\hline
+			Baseline &  \\
+			Offline &  \\
+			Online & \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption{}
+\end{table}
+
+
+VIsualisation
 
 
 
+\section{Conclusion}
 
-
+In this challenge, we tried several approaches. We validated that fine tuning Convolutional Neural Networks is a good approach on this kind of datasets.
 
 
 
