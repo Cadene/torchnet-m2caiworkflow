@@ -21,7 +21,7 @@
 
 % Pages are numbered in submission mode, and unnumbered in camera-ready
 %\ifcvprfinal\pagestyle{empty}\fi
-\setcounter{page}{4321}
+\setcounter{page}{1}
 \begin{document}
 
 %%%%%%%%% TITLE
@@ -42,10 +42,7 @@ Sorbonne Universites, UPMC Univ Paris 06, CNRS, LIP6 UMR 7606, 4 place Jussieu, 
 
 %%%%%%%%% ABSTRACT
 \begin{abstract}
-  This report present our work on the M2CAI workflow challenge consisting in recognizing
-at which step of an operation each frame of a video belong. Firstly we fine tune a recent
-deep convolutional neural network pretrained on ImageNet. Secondly, we apply temporal smoothing
-using simple temporal averaging of the predictions and a hidden Markov model. 
+Our approach is among the three best to tackle the M2CAI Workflow challenge. The latter consists of recognizing the operation phase for each frames of endoscopic videos. In this technical report, we compare several models with our best solution, namely a fine tuned Residual Network-200 on 80\% of the training set with temporal smoothing using simple temporal averaging of the predictions and a Hidden Markov Model modeling the transitions.
 \end{abstract}
 
 %%%%%%%%% BODY TEXT
@@ -53,7 +50,7 @@ using simple temporal averaging of the predictions and a hidden Markov model.
 
 The \emph{M2CAI workflow} challenge consists in analyzing endoscopic videos of
 minimally invasive surgical operations of cholecystectomy. The task at hand is
-to detect at which of the 8 phases of the operation each frame belong. This can
+to detect at which of the 8 phases of the operation each frames belong. This can
 be useful to evaluate a surgeon or to trigger automatic actions in the operating
 room for example.
 
@@ -65,6 +62,8 @@ The dataset consists of 27 videos in the training set, ranging from 14 to 66
 minutes and a test set of 15 videos. The videos have a resolution of 1920 $\times$
 1080 pixels and are shot at 25 frames per second at the IRCAD research center in
 Strasbourg, France.
+
+Our experiments can be reproduce using our code : \url{http://github.com/Cadene/torchnet-m2caiworkflow}. Thus, we will not delve into too much details about our implementation.
 
 %-------------------------------------------------------------------------
 \subsection{Our approach}
@@ -126,7 +125,7 @@ of this tolerance to improve the smoothness of the predictions.
 
 \subsection{Hidden Markov Model}
 
-In addition to the averaging, we propose to use an HMM to model the transition
+In addition to the averaging, we propose to use an HMM to model the transitions
 between the various steps of the operation. To do so, we consider that the step of the operation is the discrete hidden state $x_t$,
 from which we only observe a noisy vector $y_t$ that is our averaged vector of log-probabilities from
 the network.
@@ -141,7 +140,7 @@ observation with a gaussian distribution. To do so, we computer for each step th
 \paragraph{Offline prediction} In this study, the transition matrix of our trained HMM is parse, which impose a lot of structure on the predicted sequence of states. By applying Viterbi algorithm, we ``decode'' a sequence of observations to obtain the most likely sequence of states. This is done for our offline prediction.
 
 \paragraph{Online prediction} However, for this challenge, the predictions must
-be given in online mode. Therefore, for our online predictions, to predict the state
+be given in online mode. Therefore, to predict the state
 $x_t$ we apply the Viterbi algorithm on the sequence $y_1,...,y_t$ and keep the
 last state of the predicted sequence. This process ensure that we are working in online
 mode. However, it decreases the performance of the HMM, because the constrains on the transition
@@ -163,11 +162,11 @@ the video.
 			\hline
 			Classification Model & Validation Accuracy Top 1 (\%) \\
 			\hline\hline
-			InceptionV3 Extraction &  \\
-			InceptionV3 Fine Tuned &  \\
-			ResNet200 Fine Tuned & \\
-			InceptionV3 From Scratch & \\
-			IncpetionV3 Weldon & \\
+			InceptionV3 From Scratch & 69.13 \\
+			IncpetionV3 Weldon & 78.18 \\
+			InceptionV3 Extraction & 78.26 \\
+			InceptionV3 Fine Tuned & 79.06 \\
+			ResNet200 Fine Tuned & 79.24 \\
 			\hline
 		\end{tabular}
 	\end{center}
