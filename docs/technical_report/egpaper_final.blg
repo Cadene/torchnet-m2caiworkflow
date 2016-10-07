@@ -1,4 +1,4 @@
-This is BibTeX, Version 0.99d (TeX Live 2016/Debian)
+This is BibTeX, Version 0.99d (TeX Live 2015)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: egpaper_final.aux
 The style file: ieee.bst
@@ -6,7 +6,7 @@ Database file #1: egbib.bib
 Warning--empty booktitle in simonyan2014very
 You've used 6 entries,
             2120 wiz_defined-function locations,
-            524 strings with 4510 characters,
+            525 strings with 4513 characters,
 and the built_in function-call counts, 1737 in all, are:
 = -- 149
 > -- 108

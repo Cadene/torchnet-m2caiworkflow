@@ -64,7 +64,7 @@ minutes and a test set of 15 videos. The videos have a resolution of 1920 $\time
 1080 pixels and are shot at 25 frames per second at the IRCAD research center in
 Strasbourg, France.
 
-Our experiments can be reproduce using our code : \url{http://github.com/Cadene/torchnet-m2caiworkflow}. Thus, we will not delve into too much details about our implementation.
+In this paper, we describe the approach submitted for the competition that yields a Jaccard score of 71.9. Furthermore, to explain the choices leading to this approach, we compare different models on our validation set. Our experiments can be reproduce using our code : \url{http://github.com/Cadene/torchnet-m2caiworkflow}. Thus, we will not delve into too much details about our implementation.
 
 %-------------------------------------------------------------------------
 \subsection{Our approach}
@@ -86,7 +86,7 @@ Thirdly, we train our frame classifier and validate it on our validation set. In
 This approach consists in using a pre-trained CNN to vectorize the training and validation sets and to train a multi-class classifier on the features vectors, such as a linear model with a cross entropy criterion or Support Vector Machines with a one-versus-all strategy.
 Usually the features are extracted at the end of the CNN after a fully connected layer or an activation functions. This is the usual baseline method for transfer learning \cite{simonyan2014very}.
 
-In this challenge, we use features extracted from the penultimate layer of InceptionV3 \cite{szegedy2015rethinking} (2048 dimensions) and train a linear model with a cross entropy criterion. Our preprocessing is as follow. As InceptionV3 takes as input images of size 299x299. We randomly rescale the original images between 299 and 330 pixels of width or height based on the smallest fitting dimension. Then, we randomly crop a square region of size 299x299. Finally, we normalize each pixels using the mean and standard deviation processed on ImageNet.
+In this challenge, we use features extracted from the penultimate layer of InceptionV3 \cite{szegedy2015rethinking} (2048 dimensions) and train a linear model with a cross entropy criterion. Our preprocessing is as follow. Given that InceptionV3 takes as input images of size 299x299, we randomly rescale the original images between 299 and 330 pixels of width or height based on the smallest fitting dimension. Then, we randomly crop a square region of size 299x299. Finally, we normalize each pixels using the mean and standard deviation processed on ImageNet.
 
 %https://github.com/Cadene/torchnet-m2caiworkflow/blob/master/src/inceptionv3.lua
 
@@ -101,11 +101,11 @@ We also fine-tune an other pre-trained CNN on ImageNet called Residual Network-2
 
 \subsection{Other Baselines}
 
-The first baseline consists in training InceptionV3 from scratch. It means that we reset all its parameters with LSUV method \cite{LSUVInit2015}.
+The first baseline consists in training InceptionV3 from scratch. It means that we reset all its parameters with LSUV method \cite{LSUVInit2015}. We use the same preprocessing than before. However, we process the mean and std over our training set.
 
 The second baseline is to fine-tune an Inception-V3 with the WELDON aggregation layer plugged at the end \cite{durand2016weldon}.
 It is known to be effective in the case of small datasets with strong spatial variance, specifically objects translationally invariant in the image.
-We use the same preprocessing with a minimal size and crop size of 448 and a maximum size of 463.
+We use the same preprocessing than for fine tuning. However, we use a minimal image size and crop size of 448 and a maximum size of 463. Hence, the input of the spatial aggregation layer is a spatial map of features and no longer a vector of features.
 
 
 \section{Temporal smoothing: Averaging and HMM}
@@ -145,8 +145,8 @@ matrix are no longer enforced on the final output sequence.
 
 \subsection{Post-processing to produce requested files}
 
-As for now, our two-step model gives us predictions at a rate of 1 frame per second. To come
-back to the required rate of 25 fps, we simply copy each prediction 25 times, and
+As for now, our two-step model produces predictions at a rate of 1 frame per second. To come
+back to the required rate of 25 fps, we simply copy each predictions 25 times, and
 then crop or pad the predicted sequence to match exactly the number of frames in
 the video.
 
@@ -175,7 +175,7 @@ In table 1, we compare our classification models by accuracy (top 1) on the vali
 
 \subsection{Temporal methods}
 
-In table 2, we compare our temporal methods by accuracy and Jaccard score on the validation set. As expected, an HMM trained on top of the smoothed predictions achieves better performance. However, we keep the online predictions of our HMM for the final submission produced on the testing set.
+In table 2 and 3, we compare our temporal methods on the validation set. As expected, an HMM trained on top of the smoothed predictions achieves better performance. However, we keep the online predictions of our HMM for the final submission produced on the testing set.
 
 \begin{table}
 	\begin{center}
@@ -189,7 +189,7 @@ In table 2, we compare our temporal methods by accuracy and Jaccard score on the
 			\hline
 		\end{tabular}
 	\end{center}
-	\caption{Accuracy Top1 and Jaccard score on the validation set.}
+	\caption{Accuracy Top1 and Jaccard score on the validation set. The variance is computed over all classes.}
 \end{table}
 
 
@@ -197,8 +197,8 @@ In table 2, we compare our temporal methods by accuracy and Jaccard score on the
 	\begin{center}
 		\begin{tabular}{|c|c|c|c|}
 			\hline
-			Temporal Model & Avg Smoothing & HMM Online & HMM Offline \\
-			\hline
+			Temporal Model by classes & Avg Smoothing & HMM Online & HMM Offline \\
+			\hline \hline
 			0.TrocarPlacement & 74.92 & 99.19 & 99.82 \\
 			1.Preparation & 73.51 & 83.69 & 85.75 \\
 			2.CalotTriangleDissection & 84.15 & 85.85 &  94.19 \\
@@ -207,6 +207,8 @@ In table 2, we compare our temporal methods by accuracy and Jaccard score on the
 			5.GallbladderPackaging & 76.06 & 67.71 & 79.89 \\
 			6.CleaningCoagulation & 83.41 & 86.88 & 91.62 \\
 			7.GallbladderRetraction & 59.25 & 85.61 & 85.53 \\
+			\hline
+			All classes & 74.67 & 81.60 & 87.59 \\
 			\hline
 		\end{tabular}
 	\end{center}

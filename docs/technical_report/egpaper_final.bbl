@@ -8,8 +8,8 @@ T.~Durand, N.~Thome, and M.~Cord.
 
 \bibitem{he2016deep}
 K.~He, X.~Zhang, S.~Ren, and J.~Sun.
-\newblock Deep residual learning for image recognition.
-\newblock In {\em CVPR}, 2016.
+\newblock Identity mappings in deep residual networks.
+\newblock In {\em ECCV}, 2016.
 
 \bibitem{Kingma14}
 D.~P. Kingma and J.~Ba.
