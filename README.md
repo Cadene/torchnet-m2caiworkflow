@@ -5,7 +5,7 @@ This is the repo for the M2CAI Workflow Challenge of the following fellow PhD st
 - The well known [Thomas Robert](http://www.thomas-robert.fr/en/), I mean if you search its name on Google it will be the first website, that's badass.
 - The super hero of fine tuning [Remi Cadene](http://remicadene.com), the equivalent of Neo in the great movie Matrix.
 
-You can find our submitted paper in this repo: [PDF](https://github.com/Cadene/torchnet-m2caiworkflow/blob/master/docs/m2cai_workflow_lip6_report.pdf)
+You can find our submitted paper in this repo: [PDF](https://github.com/Cadene/torchnet-m2caiworkflow/raw/master/docs/m2cai_workflow_lip6_report.pdf)
 
 Do not hesitate to contact us. If you have any questions about our code and/or paper, please create an issue. For other queries, please send us an email.
 
