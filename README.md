@@ -36,12 +36,12 @@ To evaluate with Jaccar score:
 
 First we have to unzip `train_workflow_challenge_m2cai2016.zip` and `test_workflow_challenge_m2cai2016.zip` in `data/raw`.
 
-Then, in `data/interim`, you extract images from videos and create several files that you will be using for training CNNs and HMMs.
+Then, in `data/interim`, we extract images from videos and create several files that we will be using for training CNNs and HMMs.
 
 ```
-$ ./src/main/data/01_extract_images.sh data/raw
-$ python 02_create_datasets.py
-$ python 03_create_testset.py
+$ ./src/main/data/01_extract_images.sh --pathraw data/raw --pathinterim data/interim
+$ python src/main/data/02_create_datasets.py
+$ python src/main/data/03_create_testset.py
 ```
 
 ### 2. Training a Convolutional Neural Network (CNN)
