@@ -4,9 +4,10 @@
 # Exclude data
 data/raw/*
 data/processed/*
-data/features/*
+data/external/*
 data/interim/*
 # Exclude models
 models/raw/*
 models/processed/*
 !.gitkeep
+experiments/*
