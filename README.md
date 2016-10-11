@@ -5,7 +5,32 @@ This is the repo for the M2CAI Workflow Challenge of the following fellow PhD st
 - The well known [Thomas Robert](http://www.thomas-robert.fr/en/), I mean if you search its name on Google it will be the first website, that's badass.
 - The super hero of fine tuning [Remi Cadene](http://remicadene.com), the equivalent of Neo in the great movie Matrix.
 
-### Data
+Do not hesitate to contact us. If you have any questions about our code and methods, please create an issue. For other queries, please send us an email.
+
+### Dependencies
+
+To train CNN:
+
+- torch
+- torchnet
+- torchnet-vision
+- (gpu) cuda
+- (gpu) cudnn
+
+To train HMM:
+
+- python
+- numpy
+- pandas
+- sklearn
+- matplotlib
+- seaborn
+
+To evaluate with Jaccar score:
+
+- matlab
+
+### 1. Extracting data
 
 First we have to unzip `train_workflow_challenge_m2cai2016.zip` and `test_workflow_challenge_m2cai2016.zip` in `data/raw`.
 
@@ -17,7 +42,7 @@ $ python 02_create_datasets.py
 $ python 03_create_testset.py
 ```
 
-### Training a Convolutional Neural Network (CNN)
+### 2. Training a Convolutional Neural Network (CNN)
 
 First we train a CNN and we save the best model regarding the validation score for each epochs.
 The best set of hyperparameters is the default set of options for each models.
@@ -55,7 +80,7 @@ $ th src/main/classif/extraction.lua
 ```
 
 
-### Extracting predictions from a CNN
+### 3. Extracting predictions from a CNN
 
 Then we extract the log probabilities from a trained CNN on the training set, validation set and testing set.
 
@@ -65,7 +90,7 @@ $ th src/main/classif/extractpreds.lua \
    -pathpreds experiments/resnet/datetime
 ```
 
-### Training a Hidden Markov Model (HMM)
+### 4. Training a Hidden Markov Model (HMM)
 
 Once we have extracted the log probabilities, we can train a Gaussian HMM on the training set and compute predictions on the validation set and testing set. We provide 4 temporal predictions :
 
@@ -81,8 +106,7 @@ $ python src/main/temporal/hmmval.py
 $ python src/main/temporal/hmmtest.py
 ```
 
-
-### Evaluating predictions
+### 5. Evaluating predictions
 
 Finally, to evaluate the temporal predictions, we must use the code given for the challenge. We can edit several variables: `phaseGroundTruths`, `phaseGroundThruth` and `predFile`.
 
