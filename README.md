@@ -99,7 +99,7 @@ Once we have extracted the log probabilities, we can train a Gaussian HMM on the
 - cnn: no smoothing
 - cnn_smooth: smoothing on 5 frames
 - hmm: smoothing on 5 frames then smoothing with hmm in online mode
-- hmm: same but in offline model
+- hmm_offline: same but in offline model
 
 TODO EXPLAIN
 
