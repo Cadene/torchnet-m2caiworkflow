@@ -1,0 +1,292 @@
+% Name           : beamerthemeupmc.sty
+% Author         : Thomas Robert (http://www.thomas-robert.fr)
+% Version        : 0.1
+% Created on     : 02.03.2016
+% Copyright      : Copyright (c) 2016 by Thomas Robert. All rights reserved.
+% License        : This file may be distributed and/or modified under the
+%                  GNU Public License.
+% Description    : Beamer theme with LIP6/UPMC inspired design.
+%                  Based on HSRM Beamer Theme by Benjamin Weiss
+%                  (https://github.com/benjamin-weiss/hsrmbeamertheme)
+
+\ProvidesPackage{beamerthemeupmc}[2016/03/02]
+
+\usepackage{eso-pic}
+\usepackage{tikz}
+\usepackage{pdfpages}
+\usepackage{hyperref}
+\usepackage{pbox}
+
+\newif\if@doSectionPage
+\@doSectionPagefalse
+\DeclareOption{nosectionpages}{\@doSectionPagetrue}
+
+\newif\if@doCompressMiniframes
+\@doCompressMiniframesfalse
+\DeclareOption{compressminiframes}{\@doCompressMiniframestrue}
+
+\newif\if@doFlama
+\@doFlamafalse
+\DeclareOption{flama}{\@doFlamatrue}
+
+\ProcessOptions
+
+\mode<presentation>
+
+%---------------------------------------------------------------------
+% TOC
+%---------------------------------------------------------------------
+\useoutertheme[subsection=false,shadow]{miniframes}
+\setbeamertemplate{section in toc}[sections numbered]
+\setbeamertemplate{subsection in toc}[subsections numbered]
+\useinnertheme{rectangles}
+
+\if@doCompressMiniframes%
+\patchcmd{\slideentry}{\advance\beamer@tempdim by -.05cm}{\advance\beamer@tempdim by\beamer@vboxoffset\advance\beamer@tempdim by\beamer@boxsize\advance\beamer@tempdim by 1.2\pgflinewidth}{}{}
+\patchcmd{\slideentry}{\kern\beamer@tempdim}{\advance\beamer@tempdim by 2pt\advance\beamer@tempdim by\wd\beamer@sectionbox\kern\beamer@tempdim}{}{}
+\fi%
+
+\let\beamer@writeslidentry@miniframeson=\beamer@writeslidentry
+\def\beamer@writeslidentry@miniframesoff{%
+	\expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% does not happen normally
+	{%else
+		% removed \addtocontents commands
+		\clearpage\beamer@notesactions%
+	}
+}
+\newcommand*{\miniframeson}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframeson}
+\newcommand*{\miniframesoff}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframesoff}
+
+\newcommand{\backupbegin}{
+	\newcounter{framenumberappendix}
+	\setcounter{framenumberappendix}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+	\addtocounter{framenumberappendix}{-\value{framenumber}}
+	\addtocounter{framenumber}{\value{framenumberappendix}}
+}
+
+%---------------------------------------------------------------------
+% Captions with numbers
+%---------------------------------------------------------------------
+\setbeamertemplate{caption}[numbered]
+
+\setlength{\parskip}{0.5em}
+
+%---------------------------------------------------------------------
+% TOC
+%---------------------------------------------------------------------
+
+\setbeamerfont{section in toc}{shape=\sc,size=\large}
+\setbeamerfont{subsection in toc}{size=\small}
+\pretocmd{\beamer@sectionintoc}{\vspace{-0.18cm}}{}{}
+\pretocmd{\beamer@subsectionintoc}{\vspace{-0.18cm}}{}{}
+
+%---------------------------------------------------------------------
+% Colors
+%---------------------------------------------------------------------
+
+% Primary Colors
+\definecolor{upmcBlueDark}{rgb}{0.18039216,0.22745098,0.26666667}
+\definecolor{upmcBlueMid}{rgb}{0.34509804,0.38039216,0.41176471}
+\definecolor{upmcBlueLight}{rgb}{0.89019608,0.91372549,0.92941176}
+\definecolor{upmcRed}{rgb}{0.882352941,0,0.098039216}
+\definecolor{upmcRedDark}{rgb}{0.588235294,0,0.058823529}
+\definecolor{upmcGreen}{rgb}{0.4745098,0.7254902,0.29411765}
+\definecolor{upmcGreenDark}{rgb}{0.25882353,0.42745098,0.21568627}
+
+% General
+\setbeamercolor{normal text}{fg=upmcBlueDark}
+\setbeamercolor{structure}{fg=upmcBlueDark}
+\setbeamercolor{alerted text}{fg=white}
+\setbeamercolor{example text}{fg=white}
+\setbeamercolor{copyright text}{fg=upmcBlueLight}
+\setbeamercolor{palette primary}{fg=upmcBlueDark}
+\setbeamercolor{palette secondary}{fg=upmcBlueDark,bg=upmcBlueLight}
+\setbeamercolor{palette tertiary}{fg=black,bg=upmcBlueLight}
+\setbeamercolor{palette quaternary}{fg=white, bg=upmcBlueDark}
+% Header
+\setbeamercolor{section in head/foot}{fg=upmcBlueLight,bg=upmcBlueMid}
+% Titlepage
+\setbeamercolor{title}{parent=normal text, fg=upmcBlueDark}
+\setbeamercolor{subtitle}{parent=normal text, fg=upmcBlueDark}
+\setbeamercolor{institute}{parent=normal text, fg=upmcBlueDark}
+\setbeamercolor{author}{fg=upmcBlueDark}
+\setbeamercolor{date}{fg=upmcBlueDark}
+% Content
+\setbeamercolor{frametitle}{parent=palette quaternary}
+% Blocks
+\setbeamercolor{block title}{parent=palette quaternary}
+\setbeamercolor{block body}{parent=palette secondary}
+\setbeamercolor{block title example}{fg=white, bg=upmcGreenDark}
+\setbeamercolor{block body example}{fg=white, bg=upmcGreen}
+\setbeamercolor{block title alerted}{fg=white, bg=upmcRedDark}
+\setbeamercolor{block body alerted}{fg=white, bg=upmcRed}
+% Notes
+\setbeamercolor{note page}{fg=upmcBlueDark,bg=upmcBlueLight}
+\setbeamercolor{note title}{fg=white, bg=upmcBlueDark}
+\setbeamercolor{note date}{parent=note title}
+% Page Number
+\setbeamercolor{page number in head/foot}{fg=upmcBlueDark}
+
+%---------------------------------------------------------------------
+% Fonts
+%---------------------------------------------------------------------
+
+% Titlepage
+\setbeamerfont{title}{size=\fontsize{18}{20}}
+\setbeamerfont{subtitle}{size=\fontsize{14}{20}}
+\setbeamerfont{date}{size=\fontsize{10}{10}}
+\setbeamerfont{author}{size=\fontsize{12}{15}}
+\setbeamerfont{institute}{size=\fontsize{8}{10}}
+% Section
+\setbeamerfont{section title}{size=\LARGE}
+% Content
+\setbeamerfont{frametitle}{size=\large}
+\setbeamerfont{copyright text}{size=\tiny}
+\setbeamerfont{block title}{size=\large}
+\setbeamerfont{block title alerted}{size=\large}
+
+\if@doFlama%
+\usepackage{fontspec}
+
+% Load font
+\newfontfamily\Light{Flama-Light}
+\newfontfamily\Book{Flama-Book}
+\newfontfamily\Medium{Flama-Medium}
+\setsansfont[BoldFont={Flama-Basic},ItalicFont={Flama-Light-Italic},BoldItalicFont={Flama-Basic-Italic}]{Flama-Light}
+
+% Fontstyle
+\setbeamerfont{title}{family=\Light}
+\setbeamerfont{subtitle}{family=\Light}
+\setbeamerfont{frametitle}{family=\Light}
+\setbeamerfont{copyright text}{family=\Light}
+\setbeamerfont{block title}{family=\Book}
+\setbeamerfont{block title alerted}{family=\Book}
+\setbeamerfont{alerted text}{family=\Medium}
+\setbeamerfont{caption name}{family=\Book}
+\renewcommand\UrlFont{\Book}
+
+% Itemize
+\newcommand{\rightTextArrow}{→}
+\setbeamertemplate{itemize item}{\rightTextArrow}
+\setbeamertemplate{itemize subitem}{\rightTextArrow}
+\setbeamertemplate{itemize subsubitem}{\rightTextArrow}
+\fi
+
+%---------------------------------------------------------------------
+% Titlepage
+%---------------------------------------------------------------------
+
+% Titlepage structure
+\def\maketitle{\ifbeamer@inframe\titlepage\else\frame[plain]{\titlepage}\fi}
+\def\titlepage{\usebeamertemplate{title page}}
+\setbeamertemplate{title page}
+{
+	% Add background to title page
+	\begin{tikzpicture}[overlay]
+	\node at (5.41,-4.75) {\includegraphics[width=1.01\paperwidth]{images/background}};
+	\end{tikzpicture}
+	\begin{minipage}[b][\paperheight]{\textwidth}
+		\vspace*{5mm}
+		\includegraphics[height=14mm]{images/logos}
+		\hspace*{0.5cm}
+		\includegraphics[height=14mm]{images/logo_labex.png}\par
+		\vspace*{5mm}
+		\ifx\inserttitle\@empty%
+		\else%
+		{\usebeamerfont{title}\usebeamercolor[fg]{title}\MakeUppercase{\inserttitle}\par}%
+		\fi%
+		\ifx\insertsubtitle\@empty%
+		\else%
+		{\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+		\vspace*{5mm}
+		\fi%
+		\ifx\insertdate\@empty%
+		\else%
+		{\usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate\par}%
+		\fi%
+		
+		%\vspace*{13mm}
+		
+		\vfill
+		
+		\ifx\insertauthor\@empty%
+		\else%
+		{\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor\par}%
+		\fi%
+		\ifx\insertinstitut\@empty%
+		\else%
+		\vspace*{3mm}
+		{\usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertinstitute\par}%
+		\fi%
+		\vspace*{5mm}
+	\end{minipage}
+}
+
+%---------------------------------------------------------------------
+% Sectionpages
+%---------------------------------------------------------------------
+
+\if@doSectionPage\@empty
+\else
+% Insert frame with section title at every section start
+\AtBeginSection[]
+{
+	\begingroup
+	\setbeamercolor{background canvas}{bg=upmcBlueDark}
+	\begin{frame}[plain]
+		\centering
+		\vfill\usebeamerfont{section title}\textcolor{white}{\Huge\textsc{\insertsection}}\vfill
+	\end{frame}
+	\endgroup
+}
+\fi
+
+%---------------------------------------------------------------------
+% Frametitle
+%---------------------------------------------------------------------
+
+\setbeamertemplate{frametitle}
+{
+	\vspace*{-.4mm}
+	\begin{beamercolorbox}[wd=\paperwidth,leftskip=0.3cm,rightskip=0.3cm,ht=3ex,dp=1.5ex]{frametitle}
+		\ifx\insertframesubtitle\empty
+		\usebeamerfont{frametitle}\insertframetitle%
+		\else
+		\usebeamerfont{frametitle}\insertframetitle~{-- \large\it \insertframesubtitle}%
+		\fi
+		\hfill \raisebox{-1.5mm}{\includegraphics[width=1.6cm]{images/upmcWhite}}
+	\end{beamercolorbox}
+}
+
+%%---------------------------------------------------------------------
+%% Footline
+%%---------------------------------------------------------------------
+\newcommand{\insertfoottitle}{\inserttitle}
+
+\newcommand{\foottitle}[1]{
+	\renewcommand{\insertfoottitle}{#1}
+}
+
+\newcommand{\speaker}[1]{
+	\renewcommand{\insertspeaker}{#1}
+}
+\newcommand{\insertspeaker}{}
+
+\usenavigationsymbolstemplate{}
+\setbeamertemplate{footline}
+{%
+	\begin{beamercolorbox}[wd=\textwidth,ht=3ex,dp=1.5ex,leftskip=0.3cm,rightskip=0.3cm]{structure}%
+		\ifthenelse{\equal{\insertspeaker}{}}{
+			\insertfoottitle
+		}{
+		\insertfoottitle{} -- \insertspeaker
+	}
+	\hfill\usebeamerfont{page number in head/foot}%
+	\insertframenumber /\inserttotalframenumber%
+\end{beamercolorbox}%
+}
+
+\mode
+<all>

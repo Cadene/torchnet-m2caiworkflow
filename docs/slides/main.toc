@@ -1,0 +1,13 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\defcounter {refsection}{0}\relax 
+\beamer@endinputifotherversion {3.36pt}
+\defcounter {refsection}{0}\relax 
+\select@language {french}
+\defcounter {refsection}{0}\relax 
+\beamer@sectionintoc {1}{Context}{2}{0}{1}
+\defcounter {refsection}{0}\relax 
+\beamer@sectionintoc {2}{Our method}{5}{0}{2}
+\defcounter {refsection}{0}\relax 
+\beamer@sectionintoc {3}{Experiments}{13}{0}{3}
+\defcounter {refsection}{0}\relax 
+\beamer@sectionintoc {4}{Conclusion}{17}{0}{4}
