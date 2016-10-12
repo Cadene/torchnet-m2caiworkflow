@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2016.9.16)  11 OCT 2016 19:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2016.9.16)  12 OCT 2016 20:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1598,7 +1598,17 @@ Package biblatex Warning: 'babel/polyglossia' detected but 'csquotes' missing.
 
 \@quotelevel=\count398
 \@quotereset=\count399
-(./main.aux)
+(./main.aux
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 71.
@@ -1811,20 +1821,20 @@ Package biblatex Info: ... file 'main.bbl' found.
 Package biblatex Info: Reference section=0 on input line 71.
 Package biblatex Info: Reference segment=0 on input line 71.
 
-(./main.nav) <images/background.pdf, id=21, 364.19562pt x 273.43053pt>
+(./main.nav) <images/background.pdf, id=52, 364.19562pt x 273.43053pt>
 File: images/background.pdf Graphic file (type pdf)
 
 <use images/background.pdf>
 Package pdftex.def Info: images/background.pdf used on input line 77.
 (pdftex.def)             Requested size: 367.8353pt x 276.16681pt.
 
-<images/logos.pdf, id=22, 141.71645pt x 37.58943pt>
+<images/logos.pdf, id=53, 141.71645pt x 37.58943pt>
 File: images/logos.pdf Graphic file (type pdf)
  <use images/logos.pdf>
 Package pdftex.def Info: images/logos.pdf used on input line 77.
 (pdftex.def)             Requested size: 150.1906pt x 39.83385pt.
 
-<images/logo_labex.png, id=23, 1175.39125pt x 382.42876pt>
+<images/logo_labex.png, id=54, 1175.39125pt x 382.42876pt>
 File: images/logo_labex.png Graphic file (type png)
 
 <use images/logo_labex.png>
@@ -1850,13 +1860,13 @@ Overfull \vbox (14.6pt too high) detected at line 77
 
 Package hyperref Warning: Ignoring empty anchor on input line 22.
 
-<images/m2cai.jpg, id=43, 1927.2pt x 1084.05pt>
+<images/m2cai.jpg, id=74, 1927.2pt x 1084.05pt>
 File: images/m2cai.jpg Graphic file (type jpg)
  <use images/m2cai.jpg>
 Package pdftex.def Info: images/m2cai.jpg used on input line 22.
 (pdftex.def)             Requested size: 138.2795pt x 77.77695pt.
 
-<images/upmcWhite.pdf, id=44, 79.59526pt x 29.74954pt>
+<images/upmcWhite.pdf, id=75, 79.59526pt x 29.74954pt>
 File: images/upmcWhite.pdf Graphic file (type pdf)
 
 <use images/upmcWhite.pdf>
@@ -1903,107 +1913,163 @@ Package pdftex.def Info: images/upmcWhite.pdf used on input line 62.
 
 ]
 
-Package hyperref Warning: Ignoring empty anchor on input line 81.
+Package hyperref Warning: Ignoring empty anchor on input line 86.
 
 File: images/upmcWhite.pdf Graphic file (type pdf)
 <use images/upmcWhite.pdf>
-Package pdftex.def Info: images/upmcWhite.pdf used on input line 81.
+Package pdftex.def Info: images/upmcWhite.pdf used on input line 86.
 (pdftex.def)             Requested size: 45.52458pt x 17.0155pt.
  [5
 
 ]
 File: images/upmcWhite.pdf Graphic file (type pdf)
  <use images/upmcWhite.pdf>
-Package pdftex.def Info: images/upmcWhite.pdf used on input line 90.
+Package pdftex.def Info: images/upmcWhite.pdf used on input line 107.
 (pdftex.def)             Requested size: 45.52458pt x 17.0155pt.
  [6
 
 ]
-File: images/upmcWhite.pdf Graphic file (type pdf)
+<images/vgg16.png, id=246, 623.32875pt x 368.37625pt>
+File: images/vgg16.png Graphic file (type png)
+ <use images/vgg16.png>
+Package pdftex.def Info: images/vgg16.png used on input line 118.
+(pdftex.def)             Requested size: 245.83282pt x 145.28499pt.
 
+
+LaTeX Warning: Citation 'simonyan2014very' on page 7 undefined on input line 11
+8.
+
+
+LaTeX Warning: Citation 'simonyan2014very' on page 7 undefined on input line 11
+8.
+
+File: images/upmcWhite.pdf Graphic file (type pdf)
 <use images/upmcWhite.pdf>
-Package pdftex.def Info: images/upmcWhite.pdf used on input line 97.
+Package pdftex.def Info: images/upmcWhite.pdf used on input line 118.
 (pdftex.def)             Requested size: 45.52458pt x 17.0155pt.
  [7
 
-]
-File: images/upmcWhite.pdf Graphic file (type pdf)
- <use images/upmcWhite.pdf>
-Package pdftex.def Info: images/upmcWhite.pdf used on input line 104.
-(pdftex.def)             Requested size: 45.52458pt x 17.0155pt.
- [8
-
-]
+ <./images/vgg16.png>]
+File: images/vgg16.png Graphic file (type png)
+ <use images/vgg16.png>
+Package pdftex.def Info: images/vgg16.png used on input line 134.
+(pdftex.def)             Requested size: 215.10196pt x 127.12366pt.
 File: images/upmcWhite.pdf Graphic file (type pdf)
 
 <use images/upmcWhite.pdf>
-Package pdftex.def Info: images/upmcWhite.pdf used on input line 111.
+Package pdftex.def Info: images/upmcWhite.pdf used on input line 134.
 (pdftex.def)             Requested size: 45.52458pt x 17.0155pt.
- [9
+
+Overfull \vbox (17.23027pt too high) detected at line 134
+ []
+
+[8
+
+]
+File: images/vgg16.png Graphic file (type png)
+ <use images/vgg16.png>
+Package pdftex.def Info: images/vgg16.png used on input line 150.
+(pdftex.def)             Requested size: 242.75693pt x 143.46379pt.
+File: images/upmcWhite.pdf Graphic file (type pdf)
+ <use images/upmcWhite.pdf>
+Package pdftex.def Info: images/upmcWhite.pdf used on input line 150.
+(pdftex.def)             Requested size: 45.52458pt x 17.0155pt.
+
+Overfull \vbox (36.269pt too high) detected at line 150
+ []
+
+[9
+
+]
+File: images/vgg16.png Graphic file (type png)
+ <use images/vgg16.png>
+Package pdftex.def Info: images/vgg16.png used on input line 167.
+(pdftex.def)             Requested size: 242.75693pt x 143.46379pt.
+File: images/upmcWhite.pdf Graphic file (type pdf)
+ <use images/upmcWhite.pdf>
+Package pdftex.def Info: images/upmcWhite.pdf used on input line 167.
+(pdftex.def)             Requested size: 45.52458pt x 17.0155pt.
+
+Overfull \vbox (21.91437pt too high) detected at line 167
+ []
+
+[10
 
 ]
 File: images/upmcWhite.pdf Graphic file (type pdf)
  <use images/upmcWhite.pdf>
-Package pdftex.def Info: images/upmcWhite.pdf used on input line 118.
-(pdftex.def)             Requested size: 45.52458pt x 17.0155pt.
- [10
-
-]
-File: images/upmcWhite.pdf Graphic file (type pdf)
-
-<use images/upmcWhite.pdf>
-Package pdftex.def Info: images/upmcWhite.pdf used on input line 125.
+Package pdftex.def Info: images/upmcWhite.pdf used on input line 188.
 (pdftex.def)             Requested size: 45.52458pt x 17.0155pt.
  [11
 
 ]
 File: images/upmcWhite.pdf Graphic file (type pdf)
  <use images/upmcWhite.pdf>
-Package pdftex.def Info: images/upmcWhite.pdf used on input line 132.
+Package pdftex.def Info: images/upmcWhite.pdf used on input line 201.
 (pdftex.def)             Requested size: 45.52458pt x 17.0155pt.
  [12
 
 ]
-
-Package hyperref Warning: Ignoring empty anchor on input line 140.
-
 File: images/upmcWhite.pdf Graphic file (type pdf)
+
 <use images/upmcWhite.pdf>
-Package pdftex.def Info: images/upmcWhite.pdf used on input line 140.
+Package pdftex.def Info: images/upmcWhite.pdf used on input line 213.
 (pdftex.def)             Requested size: 45.52458pt x 17.0155pt.
  [13
 
 ]
+
+Package hyperref Warning: Ignoring empty anchor on input line 236.
+
 File: images/upmcWhite.pdf Graphic file (type pdf)
- <use images/upmcWhite.pdf>
-Package pdftex.def Info: images/upmcWhite.pdf used on input line 146.
+<use images/upmcWhite.pdf>
+Package pdftex.def Info: images/upmcWhite.pdf used on input line 236.
 (pdftex.def)             Requested size: 45.52458pt x 17.0155pt.
  [14
 
 ]
 File: images/upmcWhite.pdf Graphic file (type pdf)
-
-<use images/upmcWhite.pdf>
-Package pdftex.def Info: images/upmcWhite.pdf used on input line 152.
+ <use images/upmcWhite.pdf>
+Package pdftex.def Info: images/upmcWhite.pdf used on input line 255.
 (pdftex.def)             Requested size: 45.52458pt x 17.0155pt.
  [15
 
 ]
+<../report/images/visu.png, id=500, 880.28876pt x 886.31125pt>
+File: ../report/images/visu.png Graphic file (type png)
+
+<use ../report/images/visu.png>
+Package pdftex.def Info: ../report/images/visu.png used on input line 269.
+(pdftex.def)             Requested size: 307.28987pt x 309.38861pt.
 File: images/upmcWhite.pdf Graphic file (type pdf)
  <use images/upmcWhite.pdf>
-Package pdftex.def Info: images/upmcWhite.pdf used on input line 158.
+Package pdftex.def Info: images/upmcWhite.pdf used on input line 269.
 (pdftex.def)             Requested size: 45.52458pt x 17.0155pt.
- [16
 
-]
+Overfull \vbox (181.0882pt too high) detected at line 269
+ []
 
-Package hyperref Warning: Ignoring empty anchor on input line 167.
+[16
+
+ <../report/images/visu.png>]
+
+Package hyperref Warning: Ignoring empty anchor on input line 293.
 
 File: images/upmcWhite.pdf Graphic file (type pdf)
 <use images/upmcWhite.pdf>
-Package pdftex.def Info: images/upmcWhite.pdf used on input line 167.
+Package pdftex.def Info: images/upmcWhite.pdf used on input line 293.
 (pdftex.def)             Requested size: 45.52458pt x 17.0155pt.
  [17
+
+]
+
+LaTeX Warning: Empty bibliography on input line 301.
+
+File: images/upmcWhite.pdf Graphic file (type pdf)
+<use images/upmcWhite.pdf>
+Package pdftex.def Info: images/upmcWhite.pdf used on input line 301.
+(pdftex.def)             Requested size: 45.52458pt x 17.0155pt.
+ [18
 
 ])
 \tf@nav=\write8
@@ -2027,8 +2093,8 @@ Package rerunfilecheck Warning: File `main.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: D78833EED348B5025EF81AD270DC55BE;42
-(rerunfilecheck)             After:  0D1FDE59CA095042622760FB134AE0B8;178.
+(rerunfilecheck)             Before: 0D1FDE59CA095042622760FB134AE0B8;178
+(rerunfilecheck)             After:  CFA042E7D62E729B272DAC2A95FC1AB8;225.
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
@@ -2037,7 +2103,15 @@ LaTeX Font Warning: Size substitutions with differences
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
+
+Package biblatex Warning: Please (re)run BibTeX on the file(s):
+(biblatex)                main
+(biblatex)                and rerun LaTeX afterwards.
 
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
@@ -2045,30 +2119,37 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 81.
  ) 
 Here is how much of TeX's memory you used:
- 30129 strings out of 493014
- 565779 string characters out of 6135690
- 1002988 words of memory out of 5000000
- 32959 multiletter control sequences out of 15000+600000
- 15931 words of font info for 44 fonts, out of 8000000 for 9000
+ 30401 strings out of 493014
+ 570814 string characters out of 6135690
+ 1011988 words of memory out of 5000000
+ 33215 multiletter control sequences out of 15000+600000
+ 17465 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 65i,19n,100p,1036b,1504s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmssi10.pfb></usr/share/texlive/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmssi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmsy8.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfss0600.pfb></
-usr/share/texmf/fonts/type1/public/cm-super/sfss0800.pfb></usr/share/texmf/font
-s/type1/public/cm-super/sfss1000.pfb></usr/share/texmf/fonts/type1/public/cm-su
-per/sfss1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfss1200.pfb></u
-sr/share/texmf/fonts/type1/public/cm-super/sfss1440.pfb></usr/share/texmf/fonts
-/type1/public/cm-super/sfss1728.pfb>
-Output written on main.pdf (17 pages, 355844 bytes).
+ 65i,19n,100p,1036b,1505s stack positions out of 5000i,500n,10000p,200000b,80000s
+pdfTeX warning (dest): name{Navigation20} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Navigation19} has been referenced but does not exis
+t, replaced by a fixed one
+
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texlive/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmssi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmssi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmsy8.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfss0600.pfb></us
+r/share/texmf/fonts/type1/public/cm-super/sfss0800.pfb></usr/share/texmf/fonts/
+type1/public/cm-super/sfss1000.pfb></usr/share/texmf/fonts/type1/public/cm-supe
+r/sfss1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfss1200.pfb></usr
+/share/texmf/fonts/type1/public/cm-super/sfss1440.pfb></usr/share/texmf/fonts/t
+ype1/public/cm-super/sfss1728.pfb></usr/share/texmf/fonts/type1/public/cm-super
+/sfsx1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfsx1095.pfb>
+Output written on main.pdf (18 pages, 612994 bytes).
 PDF statistics:
- 272 PDF objects out of 1000 (max. 8388607)
- 220 compressed objects within 3 object streams
- 44 named destinations out of 1000 (max. 500000)
- 76 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 657 PDF objects out of 1000 (max. 8388607)
+ 577 compressed objects within 6 object streams
+ 55 named destinations out of 1000 (max. 500000)
+ 110 words of extra memory for PDF output out of 10000 (max. 10000000)
 
