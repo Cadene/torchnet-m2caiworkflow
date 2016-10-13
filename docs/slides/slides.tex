@@ -39,74 +39,75 @@
 
 \begin{frame}{M2CAI Workflow Goal and Measure}
 	
-	  Online prediction: $P(y | x_i, x_{i-1}, x_{i-2}, ...)$  
-		
+		\begin{block}{Goal}
+	  	Online prediction: $P(y | x_i, x_{i-1}, x_{i-2}, ...)$   \\
 		$x_i$:= frame $i$, and $y$:= classes
+		\end{block}
 		
 		%Detecting at which of the 8 phases of the operation each frames belong.
 		
 		
-		Useful to:
+		\begin{block}{Useful to}
 		\begin{itemize}
-			\item monitor surgeons
-			\item trigger automatic actions
+			\item Monitor surgeons
+			\item Trigger automatic actions
 		\end{itemize}
+		\end{block}
 		
-		
-		Measures:
-		- Jaccard similarity coefficient:
+		\begin{block}{Measures}
+		\begin{itemize}
+			\item Jaccard similarity coefficient:
 	    $J(A,B) = \frac{| A \cap B |}{| A \cup B|} = \frac{| A \cap B |}{| A| + |B| - |A \cap B|}$
 	    
-	  - Accuracy top1: nb frames well classified / nb total frames
+	  		\item Accuracy top1: nb frames well classified / nb total frames
+	  	\end{itemize}
+	  	\end{block}
 		
 \end{frame}
 
-
-
-
-\section{Our approach} \subsection{}\label{}
-
 \begin{frame}{Two fold approach}
 
-	\begin{block}{1. Model to classify frames as images}
+	\begin{block}{1. Frames classifier using Deep Learning}
 	\begin{itemize}
-		\item Extract features from pre-trained CNN
-		\item CNN From Scratch
-		\item Fine tuning pre-trained CNN
+		\item From Scratch Convolutional Neural Network (CNN)
+		\item Features Extraction CNN 
+		\item Fine tuning CNN
 	\end{itemize}
 	\end{block}
 	
-	\begin{block}{2. Smoothing predictions of our frames classifier}
+	\begin{block}{2. Smoothing predictions}
 	\begin{enumerate}	
-		\item Averaging predictions over 15 frames % However, the metric allows a 10 second-margin (not problematic)
-		\item Hidden Markov Model as a "denoizer" (HMM)
+		\item Averaging predictions over last 15 frames % However, the metric allows a 10 second-margin (not problematic)
+		\item Hidden Markov Model (HMM) as a "denoizer" 
 	\end{enumerate}
 	\end{block}
 	
 \end{frame}
 
 
-\begin{frame}{1. Creating validation set and extracting images}
+\section{Frames classifier} \subsection{}\label{}
 
-	Spliting randomly the full training set of 27 videos
+\begin{frame}{Creating a trainset and valset of images}
+
+	\begin{block}{Creating validation set by random split}
 	\begin{itemize}
-		\item training set: 22 videos
-		\item validation set: 5 videos $\{2,9,10,13,27\}$
+		\item Training set: 22 videos
+		\item Validation set: 5 videos $\{2,9,10,13,27\}$
 	\end{itemize}
+	\end{block}	
 	
-	\vspace{1cm}	
-	
-	Extracting one frame every 25 frames (1 frame per second)
+	\begin{block}{Extracting one frame every 25 frames (1 frame per second)}
 	\begin{itemize}
-		\item training set: 59,493 images
-		\item validation set: 8,062 images
-		\item testing set: 28,732 images
+		\item Training set: 59,493 images
+		\item Validation set: 8,062 images
+		\item Testing set: 28,732 images
 	\end{itemize}
+	\end{block}
 	
 
 \end{frame}
 
-\begin{frame}{2. Training a frame classifier}
+\begin{frame}{Training CNN From Scratch}
 
 	\begin{figure}[h]
 		\centering
@@ -117,13 +118,13 @@
 	
 \end{frame}
 
-\begin{frame}{2. Training a frame classifier}
+\begin{frame}{Using representations learned on ImageNet}
 	
 	\begin{block}{\small Pre-trained CNN as Features Extractor}
-	\begin{itemize}
-		\item Remove last layer, Add new layer output size 8, Train with SGD fixing the pre-trained layers
-		\item Extract features somewhere, Train a SVM
-	\end{itemize}
+	\begin{enumerate}
+		\item Extracting features somewhere
+		\item Training a Support Vector Machine
+	\end{enumerate}
 	\end{block}
 	
 	\begin{figure}[h]
@@ -133,29 +134,13 @@
 
 \end{frame}
 
-\begin{frame}{2. Training a frame classifier}
 
-	\begin{block}{\small Training a CNN From Scratch}
-	\begin{itemize}
-		\item Design specific CNN architecture
-		\item Reinitialized architecture designed for large datasets with strong regularization
-	\end{itemize}
-	\end{block}
-	
-	\begin{figure}[h]
-		\centering
-		\includegraphics[width=.79\linewidth]{images/vgg16.png}
-	\end{figure}
-	
-\end{frame}
-
-
-\begin{frame}{2. Training a frame classifier}
+\begin{frame}{Adapting representations learned on Imagenet}
 
 	\begin{block}{\small Fine tuning a pre-trained CNN}
 	\begin{itemize}
-		\item SGD : lr, lrd, ftfactor
-		\item Adam : lr, lrd
+		\item Same process than CNN From Scratch
+		\item But smaller learning rate for pre-trained layers
 	\end{itemize}
 	\end{block}
 	
@@ -166,10 +151,9 @@
 
 \end{frame}
 
+\begin{frame}{Which CNN to use ? Possible in production ?}
 
-\begin{frame}{2. Training a frame classifier}
-
-	\begin{table}[h]
+		\begin{table}[h]
 		\centering
 		\resizebox{300pt}{!}{%
 			\begin{tabular}{|c|c|c|c|c|c|}
@@ -186,33 +170,6 @@
 		\end{table}
 
 \end{frame}
-
-
-\begin{frame}{3. Smoothing the predictions}
-
-	Averaging the predictions across the last 15 frames (15 seconds)
-	
-	Hidden Markov Model on the predictions
-	3 kind of parameters
-	the initial state probabilities
-	the matrix of probabilities of transition between states 
-	the emissions of observations
-
-\end{frame}
-
-\begin{frame}{3. Smoothing the predictions}
-
-	HMM has 
-	
-	Training : counting
-	
-	Offline testing : Viterbi algorithm to obtain the most likely sequence of states
-	
-	Online testing : to predict $x_t$ we apply Viterbi on the sequence $y_1,...,y_t$
-
-\end{frame}
-	
-\section{Experiments} \subsection{}\label{}
 
 \begin{frame}{Comparison of frames classifiers}
 	
@@ -235,21 +192,68 @@
 
 \end{frame}
 
+
+\section{Smoothing predictions} \subsection{}\label{}
+
+\begin{frame}{Gaussian Hidden Markov Model}
+	
+	\begin{block}{HMM on the smoothed predictions over last 15 frames}
+	\begin{itemize}
+		\item the initial state probabilities
+		\item the matrix of probabilities of transition between states 
+		\item the emissions of observations (mean and co-variance)
+	\end{itemize}
+	\end{block}	
+	
+	\begin{figure}
+		\centering
+		\begin{subfigure}{.49\textwidth}
+			\centering
+			\includegraphics[width=.75\linewidth]{images/index.png}
+			%			\caption{\small North-South (3479)}
+			\label{fig:dsg1}
+		\end{subfigure}%
+		\begin{subfigure}{.49\textwidth}
+			\centering
+			\includegraphics[width=.75\linewidth]{images/index2.png}
+			%		\caption{\small East-West (1856)}
+			\label{fig:dsg2}
+		\end{subfigure}
+%		\caption{8000 train images, 20760 no label, 13999 test images}
+		\label{fig:dsgimages}
+	\end{figure}	
+	
+\end{frame}
+
+\begin{frame}{Gaussian Hidden Markov Model}
+	
+	\begin{block}{Training process}
+	Counting
+	\end{block}
+	
+	\begin{block}{Testing process}
+	Offline testing : Viterbi algorithm to obtain the most likely sequence of states
+	
+	Online testing : to predict $x_t$ we apply Viterbi on the sequence $y_1,...,y_t$
+	\end{block}
+
+\end{frame}
+	
+
 \begin{frame}{Comparison of temporal smoothing methods}
 
 	\begin{table}
 	\begin{center}
-		\begin{tabular}{|c|c|c|}
+		\begin{tabular}{|c|c|c|c|}
 			\hline
-			Temporal Method & Accuracy (\%) & Jaccard \\
+			Temporal Method & Accuracy Val (\%) & Jaccard Val & Jaccard Test \\
 			\hline\hline
-			Avg Smoothing & 85.97 $\pm$ 3.75 & 74.67 $\pm$ 7.87\\
-			HMM Online & 88.90 $\pm$ 3.55 & 81.60 $\pm$ 10.49\\
-			HMM Offline & 93.47 $\pm$ 3.59 & 87.59 $\pm$ 6.97\\
+			Avg Smoothing & 85.97 & 74.67 & -- \\
+			HMM Online & 88.90 & 81.60 & 71.\\
+			HMM Offline & 93.47 & 87.59 & \\
 			\hline
 		\end{tabular}
 	\end{center}
-	\caption{Accuracy Top1 and Jaccard score on the validation set. The variance is computed over all classes.}
 	\end{table}
 
 \end{frame}
@@ -288,7 +292,7 @@
 		\end{itemize}
 	\end{block}
 	
-	Code available: github.com/Cadene/torchnet-m2caiworkflow
+	Code available: \url{github.com/Cadene/torchnet-m2caiworkflow}
 	
 \end{frame}
 
