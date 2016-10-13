@@ -40,14 +40,18 @@
 \begin{frame}{M2CAI Workflow Goal and Measure}
 	
 		\begin{block}{Goal}
-	  	Online prediction: $P(y | x_i, x_{i-1}, x_{i-2}, ...)$   \\
-		$x_i$:= frame $i$, and $y$:= classes
+			\vspace{-.2cm}
+	  	\begin{itemize}
+	  		\item Online prediction: $P(y | x_i, x_{i-1}, x_{i-2}, ...)$   \\ \hspace{2cm}
+	  		$x_i$:= frame $i$, and $y$:= classes
+	  	\end{itemize}
 		\end{block}
 		
 		%Detecting at which of the 8 phases of the operation each frames belong.
 		
 		
 		\begin{block}{Useful to}
+			\vspace{-.2cm}
 		\begin{itemize}
 			\item Monitor surgeons
 			\item Trigger automatic actions
@@ -55,6 +59,7 @@
 		\end{block}
 		
 		\begin{block}{Measures}
+						\vspace{-.2cm}
 		\begin{itemize}
 			\item Jaccard similarity coefficient:
 	    $J(A,B) = \frac{| A \cap B |}{| A \cup B|} = \frac{| A \cap B |}{| A| + |B| - |A \cap B|}$
@@ -111,7 +116,7 @@
 
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=.80\linewidth]{images/vgg16.png}
+		\includegraphics[width=.99\linewidth]{images/vgg16.png}
 		\caption{\small Vgg16 \cite{simonyan2014very}, top2 ILSVRC2014}
 		\label{fig:quora-invariance-1}
 	\end{figure}
@@ -121,15 +126,18 @@
 \begin{frame}{Using representations learned on ImageNet}
 	
 	\begin{block}{\small Pre-trained CNN as Features Extractor}
+		\vspace{-.2cm}
 	\begin{enumerate}
 		\item Extracting features somewhere
 		\item Training a Support Vector Machine
 	\end{enumerate}
 	\end{block}
 	
+		\vspace{-.4cm}
+	
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=.70\linewidth]{images/vgg16.png}
+		\includegraphics[width=.84\linewidth]{images/vgg16.png}
 	\end{figure}
 
 \end{frame}
@@ -138,15 +146,18 @@
 \begin{frame}{Adapting representations learned on Imagenet}
 
 	\begin{block}{\small Fine tuning a pre-trained CNN}
+		\vspace{-.2cm}
 	\begin{itemize}
 		\item Same process than CNN From Scratch
 		\item But smaller learning rate for pre-trained layers
 	\end{itemize}
 	\end{block}
 	
+		\vspace{-.4cm}
+	
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=.79\linewidth]{images/vgg16.png}
+		\includegraphics[width=.84\linewidth]{images/vgg16.png}
 	\end{figure}
 
 \end{frame}
@@ -175,15 +186,15 @@
 	
 	\begin{table}
 	\begin{center}
-		\begin{tabular}{|c|c|}
+		\begin{tabular}{|c|c|c|}
 			\hline
-			Classification Model & Accuracy (\%) \\
+			Model & Type & Accuracy (\%) \\
 			\hline\hline
-			InceptionV3 Extraction & 60.53 \\
-			InceptionV3 From Scratch & 69.13 \\
-			InceptionV3 Weldon & 78.18 \\
-			InceptionV3 Fine-tuned & 79.06 \\
-			ResNet200 Fine-tuned & 79.24 \\
+			InceptionV3 & Extraction (repres. of ImageNet)& 60.53 \\
+			InceptionV3 & From Scratch (repres. of M2CAI) & 69.13 \\
+			%InceptionV3 Weldon & 78.18 \\
+			InceptionV3 & Fine-tuning (both representations) & 79.06 \\
+			\textbf{ResNet200} & \textbf{Fine-tuning (both representations)} & \textbf{79.24} \\
 			\hline
 		\end{tabular}
 	\end{center}
@@ -198,10 +209,12 @@
 \begin{frame}{Gaussian Hidden Markov Model}
 	
 	\begin{block}{HMM on the smoothed predictions over last 15 frames}
+		\vspace{-.2cm}
 	\begin{itemize}
-		\item the initial state probabilities
-		\item the matrix of probabilities of transition between states 
-		\item the emissions of observations (mean and co-variance)
+		\item Initial state probabilities
+		\item Matrix of probabilities of transition between states 
+		\item Gaussian parameters for emissions of observations : \\
+		\hspace{4cm} -> mean and co-variance matrix
 	\end{itemize}
 	\end{block}	
 	
@@ -215,7 +228,7 @@
 		\end{subfigure}%
 		\begin{subfigure}{.49\textwidth}
 			\centering
-			\includegraphics[width=.75\linewidth]{images/index2.png}
+			\includegraphics[width=.90\linewidth]{images/index2.png}
 			%		\caption{\small East-West (1856)}
 			\label{fig:dsg2}
 		\end{subfigure}
@@ -228,13 +241,17 @@
 \begin{frame}{Gaussian Hidden Markov Model}
 	
 	\begin{block}{Training process}
-	Counting
+		\begin{itemize}
+			\item Counting, Counting
+			\item Counting
+		\end{itemize}
 	\end{block}
 	
 	\begin{block}{Testing process}
-	Offline testing : Viterbi algorithm to obtain the most likely sequence of states
-	
-	Online testing : to predict $x_t$ we apply Viterbi on the sequence $y_1,...,y_t$
+		\begin{itemize}
+			\item Offline testing : Viterbi algorithm to obtain the most likely sequence of states
+			\item Online testing : to predict $x_t$ we apply Viterbi on the sequence $y_1,...,y_t$
+		\end{itemize}
 	\end{block}
 
 \end{frame}
@@ -249,8 +266,8 @@
 			Temporal Method & Accuracy Val (\%) & Jaccard Val & Jaccard Test \\
 			\hline\hline
 			Avg Smoothing & 85.97 & 74.67 & -- \\
-			HMM Online & 88.90 & 81.60 & 71.\\
-			HMM Offline & 93.47 & 87.59 & \\
+			HMM Online & 88.90 & 81.60 & 71.9 \\
+			HMM Offline & 93.47 & 87.59 & -- \\
 			\hline
 		\end{tabular}
 	\end{center}
@@ -263,12 +280,24 @@
 	\begin{figure}
 \begin{center}
 %\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
-   \includegraphics[width=1\linewidth]{../report/images/visu.png}
+   \includegraphics[width=1\linewidth]{images/visu1.png}
 \end{center}
-   \caption{Comparison of our temporal models predictions on the validation set. In blue, our ResNet200 Fine-tuned with average smoothing over 5 frames. In red, the offline predictions of an HMM trained of top of the latter model predictions. In mauve, the online predictions. In green, the ground truth label. }
 \label{fig:long}
 \label{fig:onecol}
 \end{figure}	
+	
+\end{frame}
+
+\begin{frame}{Visualization}
+	
+	\begin{figure}
+		\begin{center}
+			%\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+			\includegraphics[width=1\linewidth]{images/visu2.png}
+		\end{center}
+		\label{fig:long}
+		\label{fig:onecol}
+	\end{figure}	
 	
 \end{frame}
 
@@ -287,8 +316,8 @@
 	
 	\begin{block}{Future work}
 		\begin{itemize}
-			\item train on 100\%
-			\item ensembling
+			\item Fine tuning CNN on full trainset (not only 80\%)
+			\item Ensembling several fine tuned CNNs
 		\end{itemize}
 	\end{block}
 	

@@ -1,10 +1,9 @@
-This is BibTeX, Version 0.99d (TeX Live 2016/Debian)
+This is BibTeX, Version 0.99d (TeX Live 2015)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: main.aux
 The style file: biblatex.bst
-Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
-Reallocated global_strs (elt_size=20001) to 20 items from 10.
-Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
@@ -14,51 +13,49 @@ Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
 Database file #1: main-blx.bib
 Database file #2: library.bib
-Biblatex version: 3.3
-Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
+Biblatex version: 3.0
 Reallocated singl_function (elt_size=4) to 100 items from 50.
-You've used 1 entry,
-            6256 wiz_defined-function locations,
-            1176 strings with 8521 characters,
-and the built_in function-call counts, 1203 in all, are:
-= -- 58
-> -- 52
-< -- 1
-+ -- 37
-- -- 22
-* -- 24
-:= -- 275
+Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
+You've used 2 entries,
+            6047 wiz_defined-function locations,
+            1133 strings with 8196 characters,
+and the built_in function-call counts, 4255 in all, are:
+= -- 155
+> -- 167
+< -- 31
++ -- 70
+- -- 67
+* -- 266
+:= -- 470
 add.period$ -- 0
-call.type$ -- 1
-change.case$ -- 0
-chr.to.int$ -- 30
-cite$ -- 0
-duplicate$ -- 11
-empty$ -- 86
-format.name$ -- 0
-if$ -- 265
+call.type$ -- 2
+change.case$ -- 10
+chr.to.int$ -- 34
+cite$ -- 2
+duplicate$ -- 351
+empty$ -- 408
+format.name$ -- 69
+if$ -- 966
 int.to.chr$ -- 0
-int.to.str$ -- 0
+int.to.str$ -- 2
 missing$ -- 0
-newline$ -- 20
-num.names$ -- 0
-pop$ -- 40
+newline$ -- 44
+num.names$ -- 41
+pop$ -- 370
 preamble$ -- 1
-purify$ -- 0
+purify$ -- 13
 quote$ -- 0
-skip$ -- 67
+skip$ -- 253
 stack$ -- 0
-substring$ -- 110
-swap$ -- 1
-text.length$ -- 14
-text.prefix$ -- 0
+substring$ -- 133
+swap$ -- 110
+text.length$ -- 47
+text.prefix$ -- 1
 top$ -- 1
-type$ -- 22
+type$ -- 64
 warning$ -- 0
-while$ -- 45
+while$ -- 66
 width$ -- 0
-write$ -- 20
+write$ -- 41
