@@ -84,15 +84,15 @@
     \end{tabular}
  }
  % Title
- {\sc\Huge WELDON: Weakly Supervised Learning of \\ \vspace{3mm} Deep Convolutional Neural Networks  \vspace{0.1cm}}
+ {\sc M2CAI Workflow Challenge: Convolutional Neural Networks with Time\\ \vspace{3mm} Smoothing and Hidden Markov Model for Video Frames Classification  \vspace{0.1cm}}
  % Authors
- {Thibaut DURAND, Nicolas THOME, Matthieu CORD \vspace{0.1cm}\\
+ {Remi Cadene, Thomas RobertNicolas THOME, Matthieu CORD \vspace{0.1cm}\\
  {\small Sorbonne Universit\'{e}s, UPMC Univ Paris 06, LIP6, Paris, France}
  } % University logo
  {
     \begin{tabular}{c}
     %  \includegraphics[height=0.07\textheight]{logo_LIP6} \\ %\vspace{0.1cm} 
-      \includegraphics[height=0.048\textheight]{logo_upmc}  \\
+      \includegraphics[height=0.048\textheight]{logo/logos.pdf}  \\
       \\
       \hspace{-10mm}
       \includegraphics[height=0.075\textheight]{logo/dga.jpg} \hspace{2mm}
@@ -112,47 +112,49 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\textbf{Goal:} image classification or ranking
+\textbf{Goal:} Surgical video frames classification
  
-$\triangleright$ Learning of deep CNN on small datasets
+$\triangleright$ Videos of size 1920x1080 Shot at 25 frames per second at IRCAD research center in Strasbourg, France
 
-$\triangleright$ How to transfer on datasets with complex scenes?
+$\triangleright$ 27 training videos
 
-$\triangleright$ Problem: invariance (scale, translation)
+$\triangleright$ 15 testing videos
+
+$\triangleright$ 8 classes
 
  \begin{tabular}{cc}
-\includegraphics[width=3.5cm]{005831}
+\includegraphics[width=3.5cm]{../slides/images/m2cai.jpg}
 & 
-\includegraphics[width=3.5cm]{008895} 
+\includegraphics[width=3.5cm]{logo/dga.jpg} 
 \\
 {\em OK for centered object} & {\em KO for ``natural'' image}
 \end{tabular}
 
 \vspace{1mm}
 
-$\triangleright$ Efficient transfer: needs bounding boxes
+$\triangleright$ Online prediction: $P(y | x_i, x_{i-1}, x_{i-2}, ...)$
  
 %$\triangleright$ Supervision: full annotations ({\em e.g.} BB) expensive
 
-$\triangleright$ Full annotations expensive $\Rightarrow$ weak supervision
+$\triangleright$ Usefull to
 %Weakly Supervised Learning (WSL) framework 
 
-~~ $\triangleright$ Select relevant regions $\rightarrow$ better prediction
+~~ $\triangleright$ Monitor surgeons
 
-~~ $\triangleright$ Baseline model: Latent SVM (LSVM)
+~~ $\triangleright$ Trigger automatic actions
 
 %$\triangleright$ End-to-end training 
 
 \vspace{2mm}
-\textbf{Contributions}
+\textbf{Our approach (usable in production)}
 
-$\triangleright$ New region aggregation strategy
+$\triangleright$ Firstly, we train a classifier using Deep Learning
 
-$\triangleright$ Structured ranking AP loss for WSL %Loss to optimize Average Precision
+$\triangleright$ Secondly, we smooth its predictions 
 
-$\triangleright$ Fully convolutional architecture 
+~~ $\triangleright$ Averaging predictions over last 15 frames
 
-$\triangleright$ Experimental validation on 6 datasets
+~~ $\triangleright$ Then, we use a Hidden Markov Model (HMM) as a "denoizer"
 
 }
 
@@ -178,60 +180,54 @@ $\triangleright$ Experimental validation on 6 datasets
 % }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \headerbox{Region Aggregation}{name=region,column=0,below=context, above=bottom}{
+  \headerbox{Frames classifier}{name=region,column=0,below=context, above=bottom}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\textbf{Baseline:} max aggregation [1] (MIL, LSVM)
+\textbf{Creating validation set by random split:}
+
+$\triangleright$ Training set: 22 videos
+$\triangleright$ Validation set: 5 videos $\{2,9,10,13,27\}$
 
 \vspace{1mm}
 
-\textbf{Our MANTRA aggregation} [2]
-%\textbf{Negative evidence scoring}
+\textbf{Extracting one frame every 25 frames (1 f/s):}
 
-$\triangleright$ \texttt{max} + \texttt{min} pooling (negative evidence)
+$\triangleright$ Training set: 59,493 images
 
-~~ $\triangleright$ \texttt{max}: indicator of the \textbf{presence} of the class
+$\triangleright$ Validation set: 8,062 images
 
-~~ $\triangleright$ \texttt{min}: indicator of the \textbf{absence} of the class
-
+$\triangleright$ Testing set: 28,732 images
 
 \vspace{-2mm}
 
-\begin{center}
- \begin{tabular}{cc}
-\includegraphics[width=3.2cm]{002269_street_bbox_2}
-& 
-\includegraphics[width=3.2cm]{002269_highway_bbox_2}
-\\
-\textbf{street} model & \textbf{highway} model
-\end{tabular}
-\end{center}
 
+\textbf{3 approaches using Deep Learning:}
 
-\textbf{Our WELDON aggregation} 
+$\triangleright$ Training CNN From Scratch
 
-$\triangleright$ MANTRA extension to multiple regions
-%\textbf{Top instance aggregation}
-%
-%$\triangleright$ Single region to multiple high scoring regions:
-\vspace{-2.5mm}
-\begin{equation*}
- \max \rightarrow \frac{1}{k} \sum_{i=1}^k i\text{-th} \max \quad\quad\quad
- \min \rightarrow \frac{1}{k} \sum_{i=1}^k i\text{-th} \min
-\end{equation*}
+~~ $\triangleright$ Good: learning representations for this task
 
-\vspace{-3mm}
-$\triangleright$ More robust to outliers
+~~ $\triangleright$ Bad: maybe not enough data + lot of hyperparameters
+
+$\triangleright$ Pre-trained CNN as Features Extractor + SVM
+
+~~ $\triangleright$ Good: using (good) representations learned on ImageNet 
+
+~~ $\triangleright$ Bad: large semantic gab between ImageNet and this task
+
+$\triangleright$ Fine Tuning a pre-trained CNN 
+
+~~ $\triangleright$ Good: adapting the representations learned on ImageNet for this task
 
 }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \headerbox{WELDON Architecture for Classification}{name=reso_results,column=1,row=0,span=2}{
+  \headerbox{Deep Learning architecture and methods}{name=reso_results,column=1,row=0,span=2}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   
 \begin{center}
-\includegraphics[width=16cm]{archi_weldon2.png}
+\includegraphics[width=14cm]{../slides/images/vgg16.png}
 \end{center}
 
 \vspace{-3mm}
@@ -274,84 +270,35 @@ $\triangleright$ Spatial aggregation
 
 %\vspace{-13mm}
 
-$\triangleright$ VGG16 pre-trained on ImageNet
-
-$\triangleright$ Multi-scale: 8 scales (Object Bank fusion)
-
-\vspace{-3mm}
-
-\begin{center}
-\includegraphics[height=3cm]{multiscale_image_heatmap2} 
-\end{center}
-
-\vspace{-1mm}
-
-\begin{tabular}{|l|c|c|}
-\cline{2-3}
-\multicolumn{1}{l|}{Multi-label (mAP)}	& VOC 2007 	& VOC 2012 \\
-\hline
-VGG16 			& 84.5 	& 82.8 	\\
-%SPP net 		& 82.4 	&  		\\
-Deep WSL MIL [1]		&  	& 81.8 	\\
-%MANTRA [2]	& 85.8	&  		\\
-\hline
-WELDON			& \textbf{90.2} & \textbf{88.5} \\
-\hline
-\multicolumn{3}{c}{} \vspace{-3.5mm} \\
-\cline{2-3}
-\multicolumn{1}{l|}{Multi-label (mAP)}	& VOC12 Action 	& COCO\\
-\hline
-VGG16 			& 67.1	& 59.7 \\
-Deep WSL MIL [1] 		&  & 62.8 \\
-\hline
-WELDON			& \textbf{75.0}	& \textbf{68.8} \\
-\hline
-\multicolumn{3}{c}{} \vspace{-3.5mm} \\
-\cline{2-3}
-\multicolumn{1}{l|}{Multi-class (acc)}	& 15 Scene 		& MIT67 \\
-\hline
-VGG16  			& 91.2	& 69.9 	\\
-MOP CNN [4]		&	& 68.9	\\
-%MANTRA [2]			& 93.3	& 76.6	\\
-Negative parts [3]		&	& 77.1 	\\
-\hline
-WELDON 		& \textbf{94.3} 	& \textbf{78.0} \\
-\hline
-\end{tabular}
+	\begin{center}
+		\begin{tabular}{|c|c|c|}
+			\hline
+			Model & Type & Accuracy (\%) \\
+			\hline\hline
+			InceptionV3 & Extraction (repres. of ImageNet)& 60.53 \\
+			InceptionV3 & From Scratch (repres. of M2CAI) & 69.13 \\
+			%InceptionV3 Weldon & 78.18 \\
+			InceptionV3 & Fine-tuning (both representations) & 79.06 \\
+			\textbf{ResNet200} & \textbf{Fine-tuning (both representations)} & \textbf{79.24} \\
+			\hline
+		\end{tabular}
+	\end{center}
 
 \end{minipage} \hfill 
 \begin{minipage}[t]{8cm}
 
-\vspace{-3mm}
-
-\begin{tabular}{ccc}
- \includegraphics[height=1.94cm]{003006} & \hspace{-4mm}
- \includegraphics[height=1.94cm]{COCO_7} & \hspace{-4mm}
- \includegraphics[height=1.94cm]{mit67_livingroom}
- \\
- VOC 07/12 & \hspace{-4mm} COCO & \hspace{-4mm} MIT67 
-\end{tabular}
-
-$\triangleright$ Analysis of improvements (mono-scale)
-
-\begin{tabular}{cccc|cc}
-\texttt{max} & +k=3 & +\texttt{min} & +AP & VOC07 & VOCAct \\ 
-\hline
-\checkmark & & & & 83.6&   53.5\\ \hline
-\checkmark & \checkmark & & & 86.3 & 62.6  \\ \hline
-\checkmark & & \checkmark & & 87.5 & 68.4  \\ \hline
-\checkmark & & \checkmark & \checkmark & 88.4 & 71.7 \\ \hline
-\checkmark & \checkmark & \checkmark & & 87.8 & 69.8 \\ \hline
-\checkmark & \checkmark & \checkmark & \checkmark & \textbf{88.9} & \textbf{72.6} \\ 
-\hline
-\end{tabular}
-
-% \vspace{1mm}
-% $\triangleright$ Impact of the number or regions $k$
-
-\begin{tabular}{cc}
-\hspace{-3mm} \includegraphics[width=3.8cm]{k_instances_mit6710.png} & \hspace{-3mm} \includegraphics[width=3.8cm]{k_instances_15scene10.png}
-\end{tabular}
+\begin{center}
+		\resizebox{300pt}{!}{%
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			Temporal Method & Accuracy Val (\%) & Jaccard Val & Jaccard Test \\
+			\hline\hline
+			Avg Smoothing & 85.97 & 74.67 & -- \\
+			\textbf{Avg + HMM Online} & \textbf{88.90} & \textbf{81.60} & \textbf{71.9} \\ \hline
+			Avg + HMM Offline & 93.47 & 87.59 & -- \\
+			\hline
+		\end{tabular}}
+	\end{center}
 
 
 {
@@ -374,25 +321,23 @@ $\triangleright$ Analysis of improvements (mono-scale)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \headerbox{Learning}{name=learning,column=3,row=0}{
+  \headerbox{Hidden Markov Model}{name=learning,column=3,row=0}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-$\triangleright$ Stochastic gradient descent training
+$\triangleright$ Initial state probabilities
 
-$\triangleright$ Back-propagation of the \textbf{selected windows} 
+$\triangleright$ Matrix of probabilities of transition between states
+
+$\triangleright$ Gaussian parameters for emissions of observations (mean and co-variance matrix)
+
 
 %\vspace{2mm}
 \begin{tabular}{cc}
-\hspace{-3mm} \includegraphics[width=3.9cm]{learning_car} & \hspace{-4mm} \includegraphics[width=3.9cm]{learning_boat} \\
-Class {\em car} is present & Class {\em boat} is absent 
+\hspace{-3mm} \includegraphics[width=3.9cm]{../slides/images/index.png} & \hspace{-4mm} \includegraphics[width=3.9cm]{../slides/images/index2.png} \\
+(b) & (c mean) \\
 \end{tabular}
 %\vspace{-2mm}
 
-$\triangleright$ Optimized ranking metrics (Average Precision)
-
-~~ $\triangleright$ Surrogate upper-bound loss definition
-
-~~ $\triangleright$ Generalized MANTRA ranking instantiation
 
 %~~ $\triangleright$ Exact and efficient (loss-augmented) inference
 }
@@ -421,33 +366,22 @@ $\triangleright$ Optimized ranking metrics (Average Precision)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{center}
-\begin{tabular}{c|c}
-\multicolumn{2}{c}{Correct predictions} \\
-Correct model & Incorrect model \\
-\includegraphics[height=2.2cm]{visus/aero1} & \includegraphics[height=2.2cm]{visus/aero1_bus} \\
-\hspace{-4mm} Aeroplane model (1.8) & Bus model (-0.4) \\
-\hline
-\includegraphics[height=2.2cm]{visus/sofa1}  &  \includegraphics[height=2.2cm]{visus/sofa1_horse} \\
-\hspace{-4mm} Sofa model (1.2) & Horse model (-0.6) \\
-\hline
-\hline 
-\multicolumn{2}{c}{Failing example} \\
-\includegraphics[height=2.2cm]{images/fail_buffet_gt}  &  \includegraphics[height=2.2cm]{images/fail_buffet_prediction} \\
-\hspace{-4mm} Buffet model (1.5) & \small Restaurant kitchen (1.6) \\
-\end{tabular}
+\includegraphics[width=7cm]{../report/images/visu.png}
 \end{center}
 
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\headerbox{Latent Variables Models}{name=ouverture,column=3,above=bottom,below=visu}{
+\headerbox{Conclusion}{name=ouverture,column=3,above=bottom,below=visu}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-LSSVM: $\max_{h \in \mathcal{H}} f(x,y,h) $  (maximization)
+$\triangleright$ Fine Tuning most accurate approach
+$\triangleright$ HMM is usefull to smooth the predictions
+$\triangleright$ Production ready !
 
-HCRF: $\sum_{h \in \mathcal{H}} \exp(f(x,y,h))$  (marginalization)
-
-WELDON: $\sum_{h \in \Omega \subseteq \mathcal{H}} f(x,y,h) $
+$\triangleright$ Future Work:
+~~ $\triangleright$ Fine Tuning CNN on full trainset
+~~ $\triangleright$ Ensembling several fine tuned CNNs
 
 }
 

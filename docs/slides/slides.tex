@@ -188,16 +188,16 @@
 		\begin{table}[h]
 		\centering
 		\resizebox{300pt}{!}{%
-			\begin{tabular}{|c|c|c|c|c|c|}
+			\begin{tabular}{|c|c|c|c|c|c|c|}
 				\hline
-				Model & Input & Param. & Depth & Implem. & Time (ms) \\ \hline \hline
-				Vgg16 & 224 & 138M & 16 & GPU &  \\
-				InceptionV3 & 399 & 24M & 42 & GPU & \textbf{0} \\
-				ResNet-200  & 224 &  & 200 & GPU & \\ \hline
-				InceptionV3 & 399 & 24M & 42 & CPU & 0 \\
+				Model & Input & Param. & Depth & Implem. & Forward (ms) & Backward (ms) \\ \hline \hline
+				Vgg16 & 224 & 138M & 16 & GPU & 185.29 & 437.89 \\
+				InceptionV3 & 399 & 24M & 42 & GPU & \textbf{102.21} & 311.94\\
+				ResNet-200  & 224 & 65M & 200 & GPU & 273.85 & 687.48\\ \hline
+				InceptionV3 & 399 & 24M & 42 & CPU & 19918.82 & 23010.15 \\
 				\hline
 			\end{tabular}}
-			\caption{\small Forward+Backward with batches of 30 images.} 
+			\caption{\small Forward+Backward with batches of 20 images.} 
 			\label{table:cnnbenchmark}
 		\end{table}
 
