@@ -207,6 +207,7 @@
 	
 	\begin{table}
 	\begin{center}
+				\resizebox{300pt}{!}{%
 		\begin{tabular}{|c|c|c|}
 			\hline
 			Model & Type & Accuracy (\%) \\
@@ -217,7 +218,7 @@
 			InceptionV3 & Fine-tuning (both representations) & 79.06 \\
 			\textbf{ResNet200} & \textbf{Fine-tuning (both representations)} & \textbf{79.24} \\
 			\hline
-		\end{tabular}
+		\end{tabular}}
 	\end{center}
 	\caption{Accuracy on the validation set.}
 	\end{table}
@@ -282,16 +283,18 @@
 
 	\begin{table}
 	\begin{center}
+		\resizebox{300pt}{!}{%
 		\begin{tabular}{|c|c|c|c|}
 			\hline
 			Temporal Method & Accuracy Val (\%) & Jaccard Val & Jaccard Test \\
 			\hline\hline
 			Avg Smoothing & 85.97 & 74.67 & -- \\
-			HMM Online & 88.90 & 81.60 & 71.9 \\
-			HMM Offline & 93.47 & 87.59 & -- \\
+			\textbf{Avg + HMM Online} & \textbf{88.90} & \textbf{81.60} & \textbf{71.9} \\ \hline
+			Avg + HMM Offline & 93.47 & 87.59 & -- \\
 			\hline
-		\end{tabular}
+		\end{tabular}}
 	\end{center}
+	\caption{With the predictions of our fine tuned ResNet-200}
 	\end{table}
 
 \end{frame}
