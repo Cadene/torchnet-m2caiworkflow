@@ -33,9 +33,9 @@
   \strng{fullhash}{SKZA1}
   \field{labelyear}{2014}
   \field{sortinit}{S}
+  \field{booktitle}{ICLR}
   \field{title}{Very deep convolutional networks for large-scale image
   recognition}
-  \field{journaltitle}{ICLR}
   \field{year}{2014}
 \endentry
 
