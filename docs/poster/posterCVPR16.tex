@@ -80,22 +80,24 @@
  % Eye Catcher
  { 
     \begin{tabular}{c}
-      \includegraphics{logo/CVPRLogo} \\
+      \hspace{0.5cm}\includegraphics[width=4.5cm]{logo/logo_miccai.png} \\ \vspace{-.2cm}
+      \\
+      \hspace{0.2cm}\includegraphics[width=4cm]{logo/logo_m2cai.png}
     \end{tabular}
  }
  % Title
- {\sc M2CAI Workflow Challenge: Convolutional Neural Networks with Time\\ \vspace{3mm} Smoothing and Hidden Markov Model for Video Frames Classification  \vspace{0.1cm}}
+ {\sc \fontsize{0.7cm}{0.6cm}\selectfont M2CAI Workflow Challenge: Convolutional Neural \\ {\fontsize{0.7cm}{0.6cm}\selectfont Networks with Time Smoothing and Hidden Markov Model} \\ for Video Frames Classification }
  % Authors
- {Remi Cadene, Thomas RobertNicolas THOME, Matthieu CORD \vspace{0.1cm}\\
+ {Remi \textsc{Cadene}, Thomas \textsc{Robert}, Nicolas \textsc{Thome}, Matthieu \textsc{Cord} \vspace{0.1cm}\\
  {\small Sorbonne Universit\'{e}s, UPMC Univ Paris 06, LIP6, Paris, France}
  } % University logo
  {
     \begin{tabular}{c}
     %  \includegraphics[height=0.07\textheight]{logo_LIP6} \\ %\vspace{0.1cm} 
-      \includegraphics[height=0.048\textheight]{logo/logos.pdf}  \\
-      \\
+          \hspace{-5mm}
+      \includegraphics[height=0.075\textheight]{logo/logos.pdf}  \\
       \hspace{-10mm}
-      \includegraphics[height=0.075\textheight]{logo/dga.jpg} \hspace{2mm}
+      \includegraphics[height=0.060\textheight]{logo/logo_labex.png} \hspace{8mm}
       \includegraphics[height=0.075\textheight]{logo/cnrs} 
     \end{tabular}
     
@@ -180,13 +182,17 @@ $\triangleright$ Secondly, we smooth its predictions
 % }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \headerbox{Frames classifier}{name=region,column=0,below=context, above=bottom}{
+  \headerbox{Deep Learning Methods}{name=region,column=0,below=context, above=bottom}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \textbf{Creating validation set by random split:}
 
-$\triangleright$ Training set: 22 videos
-$\triangleright$ Validation set: 5 videos $\{2,9,10,13,27\}$
+$\triangleright$ Training set: 22 videos (59,493 images)
+
+$\triangleright$ Validation set: 5 videos (8,062 images)
+
+$\triangleright$ Testing set: 15 videos (28,732 images)
+
 
 \vspace{1mm}
 
