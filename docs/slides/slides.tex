@@ -3,11 +3,22 @@
 \begin{frame}{M2CAI Workflow Dataset}
 	
 		\begin{figure}
+		\centering
+		\begin{subfigure}{.49\textwidth}
 			\centering
-			\includegraphics[width=.45\linewidth]{images/m2cai.jpg}
-			%		\caption{80000 train images, 20000 test images, 101 classes}
-			\label{fig:2images}
-		\end{figure}
+			\includegraphics[width=.90\linewidth]{images/m2cai.jpg}
+			%			\caption{\small North-South (3479)}
+			\label{fig:dsg1}
+		\end{subfigure}%
+		\begin{subfigure}{.49\textwidth}
+			\centering
+			\includegraphics[width=.90\linewidth]{images/m2cai-2.jpg}
+			%		\caption{\small East-West (1856)}
+			\label{fig:dsg2}
+		\end{subfigure}
+%		\caption{8000 train images, 20760 no label, 13999 test images}
+		\label{fig:dsgimages}
+	\end{figure}
 	
 	Videos resolution is 1920 x 1080, shot at 25 frames per second at the IRCAD research center in Strasbourg, France.
 	
@@ -83,7 +94,7 @@
 	\begin{block}{2. Smoothing predictions}
 	\begin{enumerate}	
 		\item Averaging predictions over last 15 frames % However, the metric allows a 10 second-margin (not problematic)
-		\item Hidden Markov Model (HMM) as a "denoizer" 
+		\item Hidden Markov Model (HMM) as a "temporal denoizer" 
 	\end{enumerate}
 	\end{block}
 	
@@ -116,8 +127,16 @@
 
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=.99\linewidth]{images/vgg16.png}
+		\includegraphics[width=.75\linewidth]{images/vgg16.png}
 		\caption{\small Vgg16 \cite{simonyan2014very}, top2 ILSVRC2014}
+		\label{fig:quora-invariance-1}
+	\end{figure}
+	
+	\vspace{-.9cm}	
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=.50\linewidth]{images/FromScratch.png}
 		\label{fig:quora-invariance-1}
 	\end{figure}
 	
@@ -154,12 +173,26 @@
 	\end{enumerate}
 	\end{block}
 	
-		\vspace{-.4cm}
-	
-	\begin{figure}[h]
+		\vspace{-.2cm}
+		
+	\begin{figure}
 		\centering
-		\includegraphics[width=.84\linewidth]{images/vgg16.png}
-	\end{figure}
+		\begin{subfigure}{.59\textwidth}
+			\centering
+			\includegraphics[width=.99\linewidth]{images/vgg16.png}
+			%			\caption{\small North-South (3479)}
+			\label{fig:dsg1}
+		\end{subfigure}%
+		\begin{subfigure}{.39\textwidth}
+			\centering
+			\includegraphics[width=.99\linewidth]{images/Extraction.png}
+			%		\caption{\small East-West (1856)}
+			\label{fig:dsg2}
+		\end{subfigure}
+%		\caption{8000 train images, 20760 no label, 13999 test images}
+		\label{fig:dsgimages}
+	\end{figure}	
+	
 
 \end{frame}
 
@@ -174,12 +207,25 @@
 	\end{itemize}
 	\end{block}
 	
-		\vspace{-.4cm}
+		\vspace{-.2cm}
 	
-	\begin{figure}[h]
+	\begin{figure}
 		\centering
-		\includegraphics[width=.84\linewidth]{images/vgg16.png}
-	\end{figure}
+		\begin{subfigure}{.59\textwidth}
+			\centering
+			\includegraphics[width=.99\linewidth]{images/vgg16.png}
+			%			\caption{\small North-South (3479)}
+			\label{fig:dsg1}
+		\end{subfigure}%
+		\begin{subfigure}{.39\textwidth}
+			\centering
+			\includegraphics[width=.99\linewidth]{images/FineTuning.png}
+			%		\caption{\small East-West (1856)}
+			\label{fig:dsg2}
+		\end{subfigure}
+%		\caption{8000 train images, 20760 no label, 13999 test images}
+		\label{fig:dsgimages}
+	\end{figure}	
 
 \end{frame}
 
@@ -200,6 +246,8 @@
 			\caption{\small Forward+Backward with batches of 20 images.} 
 			\label{table:cnnbenchmark}
 		\end{table}
+		
+		\textbf{Possible in production thanks to GPUs !}
 
 \end{frame}
 
@@ -222,6 +270,15 @@
 	\end{center}
 	\caption{Accuracy on the validation set.}
 	\end{table}
+
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{images/resnet.png}
+		%		\caption{80000 train images, 20000 test images, 101 classes}
+		\label{fig:2images}
+	\end{figure}
+	
+
 
 \end{frame}
 
@@ -288,6 +345,7 @@
 			\hline
 			Temporal Method & Accuracy Val (\%) & Jaccard Val & Jaccard Test \\
 			\hline\hline
+			No Smoothing & 79.24 & -- & -- \\
 			Avg Smoothing & 85.97 & 74.67 & -- \\
 			\textbf{Avg + HMM Online} & \textbf{88.90} & \textbf{81.60} & \textbf{71.9} \\ \hline
 			Avg + HMM Offline & 93.47 & 87.59 & -- \\

@@ -20,10 +20,9 @@ cmd:option('-usegpu', true, 'use gpu')
 cmd:option('-bsize', 7, 'batch size')
 cmd:option('-nepoch', 20, 'epoch number')
 cmd:option('-lr', 4e-5, 'learning rate for adam')
-cmd:option('-lrd', 0.05, 'learning rate decay')
+cmd:option('-lrd', 0.005, 'learning rate decay')
 cmd:option('-ftfactor', 10, 'fine tuning factor')
 cmd:option('-nthread', 3, 'threads number for parallel iterator')
-cmd:option('-part', '1', 'data part split')
 local config = cmd:parse(arg)
 print(string.format('running on %s', config.usegpu and 'GPU' or 'CPU'))
 
@@ -37,7 +36,7 @@ torch.manualSeed(config.seed)
 local path = '/net/big/cadene/doc/Deep6Framework2'
 local pathmodel   = path..'/models/raw/resnet/net.t7'
 local pathdataset = path..'/data/processed/m2caiworkflow'
-local pathlog = path..'/logs/m2caiworkflow/resnet_part'..config.part..'/'..config.date
+local pathlog = path..'/logs/m2caiworkflow/resnet_part1/'..config.date
 local pathtrainset     = pathdataset..'/trainset.t7'
 local pathvalset       = pathdataset..'/valset.t7'
 local pathclasses      = pathdataset..'/classes.t7'
@@ -48,7 +47,10 @@ local pathbestepoch = pathlog..'/bestepoch.t7'
 local pathbestnet   = pathlog..'/net.t7'
 local pathconfig    = pathlog..'/config.t7'
 
-local trainset, valset, classes, class2target = m2caiworkflow.load(config.part)
+local trainset, valset, classes, class2target = m2caiworkflow.load{
+   pathtraintxt = 'data/interim/trainset_1.txt',
+   pathvaltxt   = 'data/interim/valset_1.txt'
+}
 
 require 'cudnn'
 local net = model.load{
@@ -56,7 +58,7 @@ local net = model.load{
    length   = 200
 }
 net:remove()
-net:add(nn.GradientReversal(-1*config.ftfactor))
+net:add(nn.GradientReversal(-1.0/config.ftfactor))
 net:add(nn.Linear(2048,#classes))
 print(net)
 
