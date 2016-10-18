@@ -15,17 +15,15 @@ local m2caiworkflow = require 'src.data.m2caiworkflow'
 local cmd = torch.CmdLine()
 cmd:option('-seed', 1337, 'seed for cpu and gpu')
 cmd:option('-usegpu', true, 'use gpu')
-cmd:option('-bsize', 7, 'batch size')
+cmd:option('-bsize', 14, 'batch size')
 cmd:option('-nthread', 3, 'threads number for parallel iterator')
-cmd:option('-pathnet','logs/m2caiworkflow/finetuning_part2/16_09_13_08:35:55/net.t7')
-cmd:option('-pathpreds', '/local/robert/m2cai/workflow/extract/inceptionv3_2/16_09_13_08:35:55')
-cmd:option('-part', '2', '')
-cmd:option('-model', 'inceptionv3', '')
+cmd:option('-pathnet','logs/m2caiworkflow/resnetfulltrain/16_10_17_14:41:57/net_epoch,12.t7')
+cmd:option('-pathpreds', 'logs/m2caiworkflow/resnetfulltrain/16_10_17_14:41:57')
+cmd:option('-model', 'resnet', '')
 local config = cmd:parse(arg)
 print(string.format('running on %s', config.usegpu and 'GPU' or 'CPU'))
 
 config.idGPU = os.getenv('CUDA_VISIBLE_DEVICES') or -1
-config.pid   = unilocal tnt = require 'torchnet'
 config.date  = os.date("%y_%m_%d_%X")
 
 torch.setdefaulttensortype('torch.FloatTensor')
@@ -34,9 +32,8 @@ torch.manualSeed(config.seed)
 local path = '/net/big/cadene/doc/Deep6Framework2'
 local pathdataset  = path..'/data/processed/m2caiworkflow'
 local pathtrainset = pathdataset..'/trainset.t7'
-local pathvalset   = pathdataset..'/valset.t7'
 local pathtestset  = pathdataset..'/testset.t7'
-local pathnet = config.pathnet
+local pathnet = path..'/'..config.pathnet
 
 require 'cunn'
 require 'cudnn'
@@ -44,7 +41,7 @@ local net = torch.load(pathnet)
 print(net)
 local criterion = nn.CrossEntropyCriterion():float()
 
-local trainset, valset, classes, class2target = m2caiworkflow.load(config.part)
+local trainset, classes, class2target = m2caiworkflow.loadFullTrainset()
 local testset = m2caiworkflow.loadTestset()
 -- testset  = testset:shuffle(300)
 -- valset   = valset:shuffle(300)
@@ -60,12 +57,12 @@ local function addTransforms(dataset, model)
          function(path) return image.load(path, 3) end,
          vision.image.transformimage.randomScale{
             minSize = model.inputSize[2],
-            maxSize = model.inputSize[2] + 31},
-         vision.image.transformimage.randomCrop(model.inputSize[2]),
-         vision.image.transformimage.colorNormalize{
-            mean = model.mean,
-            std  = model.std
-         }
+            maxSize = model.inputSize[2] + 10},
+         vision.image.transformimage.randomCrop(model.inputSize[2])
+         -- vision.image.transformimage.colorNormalize{
+         --    mean = model.mean,
+         --    std  = model.std
+         -- }
       }(sample.path)
       return sample
    end)
@@ -74,14 +71,12 @@ end
 
 local model = vision.models[config.model]
 testset  = addTransforms(testset, model)
-valset   = addTransforms(valset, model)
 trainset = addTransforms(trainset, model)
 function trainset:manualSeed(seed) torch.manualSeed(seed) end
 
 os.execute('mkdir -p '..pathdataset)
 os.execute('mkdir -p '..config.pathpreds)
 torch.save(pathtrainset, trainset)
-torch.save(pathvalset, valset)
 torch.save(pathtestset, testset)
 
 local function getIterator(mode)
@@ -173,21 +168,13 @@ if config.usegpu then
    end  -- alternatively, this logic can be implemented via a TransformDataset
 end
 
-print('Extracting trainset ...')
-engine.mode = 'train'
-engine:test{
-   network   = net,
-   iterator  = getIterator('train'),
-   criterion = criterion
-}
-
-print('Extracting valset ...')
-engine.mode = 'val'
-engine:test{
-   network   = net,
-   iterator  = getIterator('val'),
-   criterion = criterion
-}
+-- print('Extracting trainset ...')
+-- engine.mode = 'train'
+-- engine:test{
+--    network   = net,
+--    iterator  = getIterator('train'),
+--    criterion = criterion
+-- }
 
 print('Extracting testset ...')
 engine.mode = 'test'

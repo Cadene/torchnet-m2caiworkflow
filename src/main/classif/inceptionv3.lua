@@ -19,11 +19,11 @@ cmd:option('-usegpu', true, 'use gpu')
 cmd:option('-bsize', 19, 'batch size')
 cmd:option('-nepoch', 20, 'epoch number')
 cmd:option('-lr', 1e-4, 'learning rate for adam')
-cmd:option('-lrd', 0, 'learning rate decay')
+cmd:option('-lrd', 0.005, 'learning rate decay')
 cmd:option('-ftfactor', 10, 'fine tuning factor')
 cmd:option('-fromscratch', false, 'if true reset net and set ftfactor to 1')
 cmd:option('-nthread', 3, 'threads number for parallel iterator')
-cmd:option('-part', '6b', 'data part split')
+cmd:option('-part', '1', 'data part split')
 local config = cmd:parse(arg)
 print(string.format('running on %s', config.usegpu and 'GPU' or 'CPU'))
 
@@ -81,12 +81,6 @@ local function addTransforms(dataset, mean, std)
    return dataset
 end
 
-trainset = trainset:shuffle()
-trainset = addTransforms(trainset, mean, std)
-function trainset:manualSeed(seed) torch.manualSeed(seed) end
--- valset  = valset:shuffle(300)
-valset  = addTransforms(valset, mean, std)
-
 if config.fromscratch then
    net:reset()
    if paths.filep(pathmean) and paths.filep(pathstd) then
@@ -103,6 +97,12 @@ else
    mean = vision.models.inceptionv3.mean
    std  = vision.models.inceptionv3.std
 end
+
+trainset = trainset:shuffle()
+trainset = addTransforms(trainset, mean, std)
+function trainset:manualSeed(seed) torch.manualSeed(seed) end
+-- valset  = valset:shuffle(300)
+valset  = addTransforms(valset, mean, std)
 
 os.execute('mkdir -p '..pathlog)
 os.execute('mkdir -p '..pathdataset)

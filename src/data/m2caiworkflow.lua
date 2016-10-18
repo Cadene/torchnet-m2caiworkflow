@@ -49,10 +49,10 @@ m2caiworkflow.loadFullTrainset = argcheck{
 }
 
 m2caiworkflow.loadTestset = argcheck{
-   {name='dirimg',  type='string', default='data/interim/images'},
-   {name='pathtxt', type='string', default='data/interim/fulltrainset.txt'},
+   {name='dirimg',  type='string', default='data/interim/imagesTest'},
+   {name='pathtxt', type='string', default='data/interim/testset.txt'},
    call =
-   function(dirname)
+   function(dirimg, pathtxt)
       local testset = m2caiworkflow._load(dirimg, pathtxt)
       return testset
    end

@@ -15,7 +15,7 @@ local m2caiworkflow = require 'src.data.m2caiworkflow'
 local cmd = torch.CmdLine()
 -- options to get acctop1=79.06 in 9 epoch
 cmd:option('-seed', 1337, 'seed for cpu and gpu')
-cmd:option('-usegpu', true, 'use gpu')
+cmd:option('-nogpu', false, 'use gpu by default')
 cmd:option('-bsize', 7, 'batch size')
 cmd:option('-nepoch', 20, 'epoch number')
 cmd:option('-lr', 4e-5, 'learning rate for adam')
@@ -25,7 +25,7 @@ cmd:option('-fromscratch', false, 'if true reset net and set ftfactor to 1')
 cmd:option('-nthread', 3, 'threads number for parallel iterator')
 cmd:option('-model', 'resnet', '')
 local config = cmd:parse(arg)
-print(string.format('running on %s', config.usegpu and 'GPU' or 'CPU'))
+print(string.format('running on %s', config.nogpu and 'CPU' or 'GPU'))
 
 config.idGPU = os.getenv('CUDA_VISIBLE_DEVICES') or -1
 config.pid   = unistd.getpid()
@@ -51,6 +51,7 @@ local model = vision.models[config.model]
 if config.fromscratch then
    config.ftfactor = 1
 end
+local net
 if config.model == 'resnet' then
    require 'cudnn'
    net = model.load{
@@ -70,8 +71,6 @@ end
 print(net)
 local criterion = nn.CrossEntropyCriterion():float()
 
-local mean, std
-
 local function addTransforms(dataset, model, mean, std)
    dataset = dataset:transform(function(sample)
       local spl = lsplit(sample.line,', ')
@@ -82,7 +81,8 @@ local function addTransforms(dataset, model, mean, std)
          function(path) return image.load(path, 3) end,
          vision.image.transformimage.randomScale{
             minSize = model.inputSize[2],
-            maxSize = model.inputSize[2]+10},
+            maxSize = model.inputSize[2] + 10
+         },
          vision.image.transformimage.randomCrop(model.inputSize[2]),
          vision.image.transformimage.colorNormalize(mean, std) -- mean not set
       }(sample.path)
@@ -91,9 +91,7 @@ local function addTransforms(dataset, model, mean, std)
    return dataset
 end
 
-trainset = trainset:shuffle()
-trainset = addTransforms(trainset, model, mean, std)
-function trainset:manualSeed(seed) torch.manualSeed(seed) end
+local mean, std
 
 if config.fromscratch then
    net:reset()
@@ -102,7 +100,7 @@ if config.fromscratch then
       std  = torch.load(pathstd)
    else
       mean = torch.zeros(3, model.inputSize[2], model.inputSize[2])
-      std = torch.zeros(3,  model.inputSize[2], model.inputSize[2])
+      std  = torch.zeros(3,  model.inputSize[2], model.inputSize[2])
       mean, std = utils.processMeanStd(trainset, .1, mean, std)
       torch.save(pathmean, mean)
       torch.save(pathstd, std)
@@ -111,6 +109,10 @@ else
    mean = model.mean
    std  = model.std
 end
+
+trainset = trainset:shuffle()
+trainset = addTransforms(trainset, model, mean, std)
+function trainset:manualSeed(seed) torch.manualSeed(seed) end
 
 os.execute('mkdir -p '..pathlog)
 os.execute('mkdir -p '..pathdataset)
@@ -197,7 +199,7 @@ engine.hooks.onEnd = function(state)
    print('Confusion Matrix (rows = gt, cols = pred)')
    print(meter.confm:value())
 end
-if config.usegpu then
+if not config.nogpu then
    require 'cutorch'
    cutorch.manualSeed(config.seed)
    require 'cunn'
@@ -233,12 +235,12 @@ for epoch = 1, config.nepoch do
          learningRateDecay = config.lrd
       },
    }
-   local logsepoch = {
+   logsepoch = {
       clerrtop1 = meter.clerr:value{k = 1},
       clerrtop5 = meter.clerr:value{k = 5},
       epoch = epoch,
       confm = meter.confm:value():clone()
    }
-   torch.save(pathlog..'/logs_epoch,'..epoch..'.t7', logsepoch)
    torch.save(pathlog..'/net_epoch,'..epoch..'.t7', net:clearState())
+   torch.save(pathlog..'/logs_epoch,'..epoch..'.t7', logsepoch)
 end
