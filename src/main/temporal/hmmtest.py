@@ -12,11 +12,12 @@ import seaborn
 from optparse import OptionParser
 np.random.seed(42)
 
+
 parser = OptionParser()
 parser.add_option("--pathnbframes", default="/local/robert/m2cai/workflow/dataset2/nb-frames.txt")
 parser.add_option("--dirannot", default="/local/robert/m2cai/workflow/annotations")
-parser.add_option("--pathtraincsv", default="/local/robert/m2cai/workflow/cnnPreds/trainextract.csv")
-parser.add_option("--pathtestcsv", default="/local/robert/m2cai/workflow/cnnPreds/testextract.csv")
+parser.add_option("--pathtraincsv", default="experiments/resnetfulltrain/16_10_17_14:41:57/trainset.csv")
+parser.add_option("--pathtestcsv", default="experiments/resnetfulltrain/16_10_17_14:41:57/testset.csv")
 parser.add_option("--save", default=True)
 parser.add_option("--dirsave", default="experiments/hmmtest/"+time.strftime("%y_%m_%d_%H:%M:%S"))
 (options, args) = parser.parse_args()

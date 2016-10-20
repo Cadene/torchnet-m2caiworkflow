@@ -18,7 +18,7 @@ cmd:option('-bsize', 15, 'batch size')
 cmd:option('-nthread', 3, 'threads number for parallel iterator')
 cmd:option('-hflip', 0, 'proba horizontal flip')
 cmd:option('-vflip', 0, 'proba vertical flip')
-cmd:option('-model', 'inceptionv3', 'or vgg16')
+cmd:option('-model', 'resnet', 'or vgg16')
 cmd:option('-pathnet', 'logs/m2caiworkflow/resnetfulltrain/16_10_17_14:41:57/net_epoch,12.t7', '')
 local config = cmd:parse(arg)
 print(string.format('running on %s', config.usegpu and 'GPU' or 'CPU'))
@@ -62,10 +62,10 @@ local function addTransforms(dataset, model)
          -- vision.image.transformimage.horizontalFlip(config.hflip),
          -- vision.image.transformimage.verticalFlip(config.vflip),
          -- vision.image.transformimage.rotation(0),
-         vision.image.transformimage.colorNormalize{
-            mean = model.mean,
-            std  = model.std
-         }
+         -- vision.image.transformimage.colorNormalize{
+         --    mean = model.mean,
+         --    std  = model.std
+         -- }
       }(sample.path)
       return sample
    end)

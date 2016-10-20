@@ -18,7 +18,7 @@ cmd:option('-usegpu', true, 'use gpu')
 cmd:option('-bsize', 14, 'batch size')
 cmd:option('-nthread', 3, 'threads number for parallel iterator')
 cmd:option('-pathnet','logs/m2caiworkflow/resnetfulltrain/16_10_17_14:41:57/net_epoch,12.t7')
-cmd:option('-pathpreds', 'logs/m2caiworkflow/resnetfulltrain/16_10_17_14:41:57')
+cmd:option('-pathpreds', 'experiments/resnetfulltrain/16_10_17_14:41:57')
 cmd:option('-model', 'resnet', '')
 local config = cmd:parse(arg)
 print(string.format('running on %s', config.usegpu and 'GPU' or 'CPU'))
@@ -168,13 +168,13 @@ if config.usegpu then
    end  -- alternatively, this logic can be implemented via a TransformDataset
 end
 
--- print('Extracting trainset ...')
--- engine.mode = 'train'
--- engine:test{
---    network   = net,
---    iterator  = getIterator('train'),
---    criterion = criterion
--- }
+print('Extracting trainset ...')
+engine.mode = 'train'
+engine:test{
+   network   = net,
+   iterator  = getIterator('train'),
+   criterion = criterion
+}
 
 print('Extracting testset ...')
 engine.mode = 'test'
