@@ -20,13 +20,13 @@
 		\label{fig:dsgimages}
 	\end{figure}
 	
-	Videos resolution is 1920 x 1080, shot at 25 frames per second at the IRCAD research center in Strasbourg, France.
+	\textbf{Endoscopic videos}, resolution of 1920 x 1080, shot at 25 frames per second at the IRCAD research center in Strasbourg, France.
 	
 	\begin{itemize}
 		\item 27 training videos ranging from 15mn to 1hour%(67,595 images)
 		%\item 22 train videos %(59,493 images)
 		%\item 5 val videos %(8,062 images)
-		\item 15 test videos %(28,732 images)
+		\item 15 testing videos %(28,732 images)
 		%\item 8 classes (CleaningCoagulation, CalotTriangleDissection, CLippingCutting, etc.)
 	\end{itemize}
 	
@@ -50,18 +50,18 @@
 
 \begin{frame}{M2CAI Workflow Goal and Measure}
 	
-		\begin{block}{Goal}
+		\begin{block}{Goal : Multi-class classification}
 			\vspace{-.2cm}
 	  	\begin{itemize}
-	  		\item Online prediction: $P(y | x_i, x_{i-1}, x_{i-2}, ...)$   \\ \hspace{2cm}
-	  		$x_i$:= frame $i$, and $y$:= classes
+	  		\item Online prediction: $P(y_i | x_i, x_{i-1}, x_{i-2}, ...)$   \\ \hspace{2cm}
+	  		$x_i$:= frame $i$, and $y_i$:= class of frame $i$
 	  	\end{itemize}
 		\end{block}
 		
 		%Detecting at which of the 8 phases of the operation each frames belong.
 		
 		
-		\begin{block}{Useful to}
+		\begin{block}{Algorithm useful to}
 			\vspace{-.2cm}
 		\begin{itemize}
 			\item Monitor surgeons
@@ -69,10 +69,10 @@
 		\end{itemize}
 		\end{block}
 		
-		\begin{block}{Measures}
+		\begin{block}{Evaluation metrics}
 						\vspace{-.2cm}
 		\begin{itemize}
-			\item Jaccard similarity coefficient:
+			\item \textbf{Jaccard index}:
 	    $J(A,B) = \frac{| A \cap B |}{| A \cup B|} = \frac{| A \cap B |}{| A| + |B| - |A \cap B|}$
 	    
 	  		\item Accuracy top1: nb frames well classified / nb total frames
@@ -83,20 +83,22 @@
 
 \begin{frame}{Two fold approach}
 
-	\begin{block}{1. Frames classifier using Deep Learning}
+	\begin{block}{1. Frames classifier using Deep Learning (Lib: Torch7)}
 	\begin{itemize}
-		\item From Scratch Convolutional Neural Network (CNN)
-		\item Features Extraction CNN 
-		\item Fine tuning CNN
+		\item From Scratch Convolutional Neural Network (CNN) \footnote{Optimized with Adam \cite{Kingma14}}
+		\item Features Extraction CNN \footnotemark[1]
+		\item Fine tuning CNN \footnotemark[1]
 	\end{itemize}
 	\end{block}
 	
-	\begin{block}{2. Smoothing predictions}
+	\begin{block}{2. Smoothing predictions (Lib: Scikit-Learn)}
 	\begin{enumerate}	
 		\item Averaging predictions over last 15 frames % However, the metric allows a 10 second-margin (not problematic)
 		\item Hidden Markov Model (HMM) as a "temporal denoizer" 
 	\end{enumerate}
 	\end{block}
+	
+		
 	
 \end{frame}
 
@@ -238,8 +240,8 @@
 				\hline
 				Model & Input & Param. & Depth & Implem. & Forward (ms) & Backward (ms) \\ \hline \hline
 				Vgg16 & 224 & 138M & 16 & GPU & 185.29 & 437.89 \\
-				InceptionV3 & 399 & 24M & 42 & GPU & \textbf{102.21} & 311.94\\
-				ResNet-200  & 224 & 65M & 200 & GPU & 273.85 & 687.48\\ \hline
+				InceptionV3 \footnote{\cite{szegedy2015rethinking}} & 399 & 24M & 42 & GPU & \textbf{102.21} & 311.94\\
+				ResNet-200 \footnote{\cite{he2016deep}}  & 224 & 65M & 200 & GPU & 273.85 & 687.48\\ \hline
 				InceptionV3 & 399 & 24M & 42 & CPU & 19918.82 & 23010.15 \\
 				\hline
 			\end{tabular}}
@@ -290,10 +292,10 @@
 	\begin{block}{HMM on the smoothed predictions over last 15 frames}
 		\vspace{-.2cm}
 	\begin{itemize}
-		\item Initial state probabilities
+		\item Initial state probabilities :
 		\item Matrix of probabilities of transition between states 
 		\item Gaussian parameters for emissions of observations : \\
-		\hspace{4cm} -> mean and co-variance matrix
+		\hspace{4cm} $\rightarrow$ mean and co-variance matrix
 	\end{itemize}
 	\end{block}	
 	
@@ -321,15 +323,15 @@
 	
 	\begin{block}{Training process}
 		\begin{itemize}
-			\item Counting, Counting
-			\item Counting
+			\item Counting using the training set annotations
+			\item Counting using the predictions
 		\end{itemize}
 	\end{block}
 	
 	\begin{block}{Testing process}
 		\begin{itemize}
 			\item Offline testing : Viterbi algorithm to obtain the most likely sequence of states
-			\item Online testing : to predict $x_t$ we apply Viterbi on the sequence $y_1,...,y_t$
+			\item \textbf{Online testing} : to predict $x_t$ we apply Viterbi on the sequence $y_1,...,y_t$
 		\end{itemize}
 	\end{block}
 
@@ -390,7 +392,7 @@
 
 	\begin{block}{Conclusion}
 		\begin{itemize}
-			\item Deep Learning efficient %to takle this problem
+			\item Deep Learning efficient even without medical knowledge%to takle this problem
 			\item Fine Tuning most accurate approach %to build a frames classifier
 			\item HMM is usefull to smooth the predictions %to add a prior in order to smooth the predictions
 		\end{itemize}
@@ -410,7 +412,7 @@
 \section{References} \subsection{}\label{references}
 
 \begin{frame}[allowframebreaks]{References}
-	
+	\nocite{*}
 	\printbibliography[heading=none]
 	
 \end{frame}

@@ -5,7 +5,7 @@ This is the repo for the [M2CAI](http://camma.u-strasbg.fr/m2cai2016/) Workflow 
 - The master of HMM, [Thomas Robert](http://www.thomas-robert.fr/en/), one to rule them all in python!
 - The super hero of fine tuning, [Remi Cadene](http://remicadene.com), the man who goes to Athens!
 
-You can find our submitted paper in this repo: [PDF](https://github.com/Cadene/torchnet-m2caiworkflow/raw/master/docs/m2cai_workflow_lip6_report.pdf)
+You can find our submitted paper on [ArXiV](https://arxiv.org/abs/1610.05541) or on [M2CAI website](http://camma.u-strasbg.fr/m2cai2016/reports/Cadene-Workflow.pdf) (version may be older).
 
 Do not hesitate to contact us. If you have any questions about our code and/or paper, please create an issue. For other queries, please send us an email.
 

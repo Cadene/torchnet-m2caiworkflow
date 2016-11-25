@@ -4,45 +4,46 @@ The top-level auxiliary file: egpaper_final.aux
 The style file: ieee.bst
 Database file #1: egbib.bib
 Warning--empty booktitle in simonyan2014very
-You've used 6 entries,
+Warning--empty journal in Stauder2016
+You've used 11 entries,
             2120 wiz_defined-function locations,
-            525 strings with 4513 characters,
-and the built_in function-call counts, 1737 in all, are:
-= -- 149
-> -- 108
+            544 strings with 5514 characters,
+and the built_in function-call counts, 3438 in all, are:
+= -- 295
+> -- 253
 < -- 0
-+ -- 42
-- -- 36
-* -- 106
-:= -- 314
-add.period$ -- 18
-call.type$ -- 6
-change.case$ -- 36
++ -- 100
+- -- 88
+* -- 237
+:= -- 636
+add.period$ -- 33
+call.type$ -- 11
+change.case$ -- 77
 chr.to.int$ -- 0
-cite$ -- 7
-duplicate$ -- 71
-empty$ -- 134
-format.name$ -- 36
-if$ -- 349
+cite$ -- 13
+duplicate$ -- 121
+empty$ -- 219
+format.name$ -- 88
+if$ -- 668
 int.to.chr$ -- 0
-int.to.str$ -- 6
-missing$ -- 6
-newline$ -- 33
-num.names$ -- 12
-pop$ -- 49
+int.to.str$ -- 11
+missing$ -- 11
+newline$ -- 58
+num.names$ -- 22
+pop$ -- 92
 preamble$ -- 1
-purify$ -- 30
+purify$ -- 66
 quote$ -- 0
-skip$ -- 45
+skip$ -- 79
 stack$ -- 0
-substring$ -- 30
-swap$ -- 8
+substring$ -- 56
+swap$ -- 12
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 24
-warning$ -- 1
-while$ -- 12
-width$ -- 7
-write$ -- 61
-(There was 1 warning)
+type$ -- 44
+warning$ -- 2
+while$ -- 22
+width$ -- 13
+write$ -- 110
+(There were 2 warnings)

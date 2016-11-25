@@ -19,6 +19,10 @@
 \usepackage{multirow}
 \usepackage{rotating}
 
+\usepackage{subcaption}
+
+\usepackage{enumitem}
+\setlist[enumerate]{leftmargin=*}
 
 \graphicspath{{images/}}
 
@@ -86,7 +90,7 @@
     \end{tabular}
  }
  % Title
- {\sc \fontsize{0.7cm}{0.6cm}\selectfont M2CAI Workflow Challenge: Convolutional Neural \\ {\fontsize{0.7cm}{0.6cm}\selectfont Networks with Time Smoothing and Hidden Markov Model} \\ for Video Frames Classification }
+ {\sc \fontsize{0.7cm}{0.6cm}\selectfont M2CAI Workflow Challenge: Convolutional Neural \\ {\fontsize{0.7cm}{0.6cm}\selectfont Networks with Time Smoothing and Hidden Markov Model} \\for Video Frames Classification }
  % Authors
  {Remi \textsc{Cadene}, Thomas \textsc{Robert}, Nicolas \textsc{Thome}, Matthieu \textsc{Cord} \vspace{0.1cm}\\
  {\small Sorbonne Universit\'{e}s, UPMC Univ Paris 06, LIP6, Paris, France}
@@ -187,27 +191,27 @@ $\triangleright$ Testing set: 15 videos (28,732 images)
 
 \textbf{"From Scratch" : End-to-End Learning}
 
-\vspace{-.4cm}
+\vspace{-.3cm}
 
 \begin{center}
 \includegraphics[width=6cm]{../slides/images/FromScratch.png}
 \end{center}
 
-\vspace{-.4cm}
+\vspace{-.3cm}
 
 \textbf{"Extraction" : Pre-trained CNN}
 
-\vspace{-.4cm}
+\vspace{-.3cm}
 
 \begin{center}
 \includegraphics[width=6cm]{../slides/images/Extraction.png}
 \end{center}
 
-\vspace{-.4cm}
+\vspace{-.3cm}
 
 \textbf{"Fine-Tuning" : Both approaches !}
 
-\vspace{-.4cm}
+\vspace{-.3cm}
 
 \begin{center}
 \includegraphics[width=6cm]{../slides/images/FineTuning.png}
@@ -219,11 +223,13 @@ $\triangleright$ Testing set: 15 videos (28,732 images)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \headerbox{Deep Learning architecture and scores}{name=reso_results,column=1,row=0,span=2}{
+  \headerbox{Comparison of Deep Learning architectures }{name=reso_results,column=1,row=0,span=2}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   
+  \begin{minipage}{.8\textwidth}
+  
 \begin{center}
-\includegraphics[width=12cm]{../slides/images/vgg16.png}
+\includegraphics[width=11cm]{../slides/images/vgg16.png}
 \end{center}
 
 	\begin{center}
@@ -231,19 +237,30 @@ $\triangleright$ Testing set: 15 videos (28,732 images)
 			\hline
 			Model & Type & Accuracy (\%) \\
 			\hline\hline
-			InceptionV3 & Extraction (repres. of ImageNet)& 60.53 \\
-			InceptionV3 & From Scratch (repres. of M2CAI) & 69.13 \\
-			%InceptionV3 Weldon & 78.18 \\
-			InceptionV3 & Fine-tuning (both representations) & 79.06 \\
-			\textbf{ResNet200} & \textbf{Fine-tuning (both representations)} & \textbf{79.24} \\
+			InceptionV3 $[$4$]$ & Extraction (repres. of ImageNet)& 60.53 \\
+			InceptionV3 $[$4$]$ & From Scratch (repres. of M2CAI) & 69.13 \\
+			InceptionV3 $[$4$]$ & Weldon $[$3$]$ (both representations) & 78.18 \\
+			InceptionV3 $[$4$]$ & Fine-tuning (both representations) & 79.06 \\
+			\textbf{ResNet200} $[$2$]$ & \textbf{Fine-tuning (both representations)} & \textbf{79.24} \\
 			\hline
 		\end{tabular}
 	\end{center}
+	
+\end{minipage}
+\begin{minipage}{.19\textwidth}
+	
+	\begin{center}
+		\includegraphics[width=1.64cm]{images/resnet.png}
+	\end{center}
+	
+	
+\end{minipage}
+
 
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \headerbox{Experiments}{name=lr-cnn,column=1,span=2,below=reso_results,above=bottom}{
+  \headerbox{Comparison of Smoothing methods}{name=lr-cnn,column=1,span=2,below=reso_results,above=bottom}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % \begin{center}
@@ -259,9 +276,9 @@ $\triangleright$ Testing set: 15 videos (28,732 images)
 % \end{tabular}
 % \end{center}
 
-\begin{minipage}[t]{8cm}
+%\begin{minipage}[t]{8cm}
 
-\begin{center}
+	\begin{center}
 		\resizebox{300pt}{!}{%
 		\begin{tabular}{|c|c|c|c|}
 			\hline
@@ -275,8 +292,13 @@ $\triangleright$ Testing set: 15 videos (28,732 images)
 		\end{tabular}}
 	\end{center}
 
+	\vspace{-.6cm}
 
-\end{minipage}
+		\begin{center}
+			\includegraphics[width=14cm]{images/visu.png}
+		\end{center}
+
+%\end{minipage}
 
 
 }
@@ -293,11 +315,27 @@ $\triangleright$ Matrix of probabilities of transition between states
 
 $\triangleright$ Gaussian parameters for emissions of observations (mean and co-variance matrix)
 
+\iffalse
+	\begin{figure}
+		\begin{subfigure}{.49\textwidth}
+			\includegraphics[width=.90cm]{../slides/images/index.png}
+			%			\caption{\small North-South (3479)}
+			\label{fig:dsg1}
+		\end{subfigure}%
+		\begin{subfigure}{.49\textwidth}
+			\centering
+			\includegraphics[width=.90cm]{../slides/images/index.png}
+			%		\caption{\small East-West (1856)}
+			\label{fig:dsg2}
+		\end{subfigure}
+		%		\caption{8000 train images, 20760 no label, 13999 test images}
+		\label{fig:dsgimages}
+	\end{figure}
+\fi
 
 %\vspace{2mm}
 \begin{tabular}{cc}
 \hspace{-3mm} \includegraphics[width=3.9cm]{../slides/images/index.png} & \hspace{-4mm} \includegraphics[width=3.9cm]{../slides/images/index2.png} \\
-(b) & (c mean) \\
 \end{tabular}
 %\vspace{-2mm}
 
@@ -328,25 +366,39 @@ $\triangleright$ Gaussian parameters for emissions of observations (mean and co-
 \headerbox{Conclusion}{name=ouverture,column=3,above=bottom,below=learning}{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\textbf{Results are reproductible:}
+\textbf{Future works:}
+
+$\triangleright$ Fine tuning CNN on full trainset (not only 80\%)
+
+$\triangleright$ Ensembling several fine tuned CNNs
+
+
+\textbf{Results are reproducible with Torch7:}
 
 \url{github.com/Cadene/torchnet-m2caiworkflow}
 
+\url{arxiv.org/abs/1610.05541}
+
 \begin{center}
-\includegraphics[width=6cm]{images/github.jpg}
+\begin{tabular}{cc}
+ \includegraphics[width=2.5cm]{images/github.jpg} & \includegraphics[width=2.5cm]{images/github.jpg} \\
+	Code & Paper
+\end{tabular}
 \end{center}
 
 
+\vspace{0cm}
+
 {
 \scriptsize
-[1] Oquab et al. Is object localization for free? {\em CVPR}, 2015.
-
-[2] Durand et al. MANTRA. {\em ICCV}, 2015.
-
-[3] Parizi et al. Automatic discovery of parts. {\em ICLR}, 2015.
-
-[4] Gong et al. Multi-scale orderless pooling. {\em ECCV}, 2014.
-
+\begin{enumerate}
+\item [1] Cadene et al. Master's Thesis : Deep Learning for Visual Recognition. {\em arXiv}, 2016.
+\item [2] He K. et al. Identity Mappings in Deep Residual Networks. {\em ECCV}, 2016.
+\item [3] Durand et al. WELDON: Weakly Supervised Learning of Deep Convolutional Neural Networks. {\em CVPR}, 2016.
+\item [4] Szeggedy et al. Rethinking the inception architecture for computer vision {\em CVPR}, 2015.
+\item [5] Diederik et al. Adam: A Method for Stochastic Optimization. {\em ICLR}, 2014.
+\item [6] Simonyan et al. Very deep convolutional networks for large-scale image recognition. {\em ICLR}, 2014.
+\end{enumerate}
 }
 
 }

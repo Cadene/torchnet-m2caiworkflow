@@ -1,4 +1,10 @@
-\begin{thebibliography}{1}\itemsep=-1pt
+\begin{thebibliography}{10}\itemsep=-1pt
+
+\bibitem{dergachyova2016}
+O.~Dergachyova, D.~Bouget, A.~Huaulmé, X.~Morandi, and P.~Jannin.
+\newblock Data-driven surgical workflow detection: Technical report for m2cai
+  2016 surgical workflow challenge.
+\newblock {\em IEEE Trans. on Medical Imaging}, 2016.
 
 \bibitem{durand2016weldon}
 T.~Durand, N.~Thome, and M.~Cord.
@@ -11,6 +17,12 @@ K.~He, X.~Zhang, S.~Ren, and J.~Sun.
 \newblock Identity mappings in deep residual networks.
 \newblock In {\em ECCV}, 2016.
 
+\bibitem{jin2016}
+Y.~Jin, Q.~Dou, H.~Chen, L.~Yu, and P.-A. Heng.
+\newblock Endorcn: Recurrent convolutional networks for recognition of surgical
+  workflow in cholecystectomy procedure video.
+\newblock {\em IEEE Trans. on Medical Imaging}, 2016.
+
 \bibitem{Kingma14}
 D.~P. Kingma and J.~Ba.
 \newblock Adam: {A} method for stochastic optimization.
@@ -21,14 +33,31 @@ D.~{Mishkin} and J.~{Matas}.
 \newblock {All you need is a good init}.
 \newblock {\em arXiv preprint arXiv:1511.06422}, Nov. 2015.
 
+\bibitem{sahu2016}
+M.~Sahu, A.~Mukhopadhyay, A.~Szengel, and S.~Zachow.
+\newblock Tool and phase recognition using contextual cnn features.
+\newblock {\em IEEE Trans. on Medical Imaging}, 2016.
+
 \bibitem{simonyan2014very}
 K.~Simonyan and A.~Zisserman.
 \newblock Very deep convolutional networks for large-scale image recognition.
 \newblock 2014.
 
+\bibitem{Stauder2016}
+R.~Stauder, D.~Ostler, M.~Kranzfelder, S.~Koller, H.~Feußner, and N.~Navab.
+\newblock The tum lapchole dataset for the m2cai 2016 workflow challenge.
+\newblock Oct 2016.
+
 \bibitem{szegedy2015rethinking}
 C.~Szegedy, V.~Vanhoucke, S.~Ioffe, J.~Shlens, and Z.~Wojna.
 \newblock Rethinking the inception architecture for computer vision.
 \newblock {\em CVPR}, 2015.
+
+\bibitem{twinanda2016endonet}
+A.~P. Twinanda, S.~Shehata, D.~Mutter, J.~Marescaux, M.~de~Mathelin, and
+  N.~Padoy.
+\newblock Endonet: A deep architecture for recognition tasks on laparoscopic
+  videos.
+\newblock {\em IEEE Trans. on Medical Imaging}, 2016.
 
 \end{thebibliography}
